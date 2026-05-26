@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,17 @@
     <title>RiMangia - Account</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
     <script src="dropdown.js" defer></script>
 </head>
+
 <body>
     <header>
         <nav>
             <div class="logo">
-                <a href="Home.html"><img src="img/Gemini_Generated_Image_od9kg1od9kg1od9k-removebg-preview.png" alt="RiMangia Logo"></a>
+                <a href="index.html"><img src="img/Gemini_Generated_Image_od9kg1od9kg1od9k-removebg-preview.png"
+                        alt="RiMangia Logo"></a>
             </div>
             <div class="nav-links">
                 <a href="Home.html">Home</a>
@@ -25,15 +29,18 @@
             <div style="display: flex; align-items: center; gap: 15px;">
                 <div class="add-recipe-icon">
                     <a href="#" onclick="navigateToAddRecipe(event)">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--green)" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--green)"
+                            xmlns="http://www.w3.org/2000/svg">
                             <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
                         </svg>
                     </a>
                 </div>
                 <div class="account-icon">
                     <a href="account.html">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--green)" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--green)"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
                         </svg>
                     </a>
                 </div>
@@ -79,16 +86,18 @@
                 <div class="preferences-header">
                     <span class="preferences-badge">Benvenuto su RiMangia</span>
                     <h2>Quali sono le tue preferenze?</h2>
-                    <p>Personalizza la tua esperienza scegliendo le caratteristiche dietetiche che ti interessano. Potrai modificarle in qualsiasi momento dal profilo.</p>
+                    <p>Personalizza la tua esperienza scegliendo le caratteristiche dietetiche che ti interessano.
+                        Potrai modificarle in qualsiasi momento dal profilo.</p>
                 </div>
 
                 <div class="preference-cards-grid" id="preference-cards-grid">
                     <label class="preference-card" data-value="Vegetariano">
                         <input type="checkbox" class="pref-checkbox" value="Vegetariano">
                         <span class="preference-card-icon vegetariano">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 22c-3-4.5-8-8-8-13a8 8 0 0 1 16 0c0 5-5 8.5-8 13z"/>
-                                <path d="M12 9v4"/>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22c-3-4.5-8-8-8-13a8 8 0 0 1 16 0c0 5-5 8.5-8 13z" />
+                                <path d="M12 9v4" />
                             </svg>
                         </span>
                         <span class="preference-card-title">Vegetariano</span>
@@ -98,11 +107,12 @@
                     <label class="preference-card" data-value="Vegano">
                         <input type="checkbox" class="pref-checkbox" value="Vegano">
                         <span class="preference-card-icon vegano">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M7 20h10"/>
-                                <path d="M12 20V10"/>
-                                <path d="M12 10C12 6 8 4 5 6c0 4 3 6 7 4"/>
-                                <path d="M12 10c0-4 4-6 7-4 0 4-3 6-7 4"/>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 20h10" />
+                                <path d="M12 20V10" />
+                                <path d="M12 10C12 6 8 4 5 6c0 4 3 6 7 4" />
+                                <path d="M12 10c0-4 4-6 7-4 0 4-3 6-7 4" />
                             </svg>
                         </span>
                         <span class="preference-card-title">Vegano</span>
@@ -112,9 +122,10 @@
                     <label class="preference-card" data-value="Senza Glutine">
                         <input type="checkbox" class="pref-checkbox" value="Senza Glutine">
                         <span class="preference-card-icon senza-glutine">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
                             </svg>
                         </span>
                         <span class="preference-card-title">Senza Glutine</span>
@@ -124,10 +135,11 @@
                     <label class="preference-card" data-value="Senza Lattosio">
                         <input type="checkbox" class="pref-checkbox" value="Senza Lattosio">
                         <span class="preference-card-icon senza-lattosio">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M8 2h8l4 10H4L8 2z"/>
-                                <path d="M12 12v10"/>
-                                <path d="M8 22h8"/>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M8 2h8l4 10H4L8 2z" />
+                                <path d="M12 12v10" />
+                                <path d="M8 22h8" />
                             </svg>
                         </span>
                         <span class="preference-card-title">Senza Lattosio</span>
@@ -137,9 +149,10 @@
                     <label class="preference-card preference-card-wide" data-value="none" id="pref-card-none">
                         <input type="checkbox" class="pref-checkbox pref-none" value="none" id="pref-none">
                         <span class="preference-card-icon nessuna">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M8 12h8"/>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M8 12h8" />
                             </svg>
                         </span>
                         <span class="preference-card-title">Nessuna preferenza</span>
@@ -151,9 +164,10 @@
 
                 <button type="button" class="btn-preferences-continue" id="btn-preferences-continue" disabled>
                     Continua su RiMangia
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="5" y1="12" x2="19" y2="12"/>
-                        <polyline points="12 5 19 12 12 19"/>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
                     </svg>
                 </button>
             </div>
@@ -165,14 +179,16 @@
             <!-- TAB NAVIGATION -->
             <div class="account-tabs" id="account-tabs">
                 <button class="account-tab active" data-tab="account">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                     Account
                 </button>
                 <button class="account-tab" data-tab="le-tue-ricette">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                         <polyline points="14 2 14 8 20 8"></polyline>
                         <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -181,8 +197,11 @@
                     Le Tue Ricette
                 </button>
                 <button class="account-tab" data-tab="ricette-salvate">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
                     </svg>
                     Ricette Salvate
                 </button>
@@ -192,17 +211,21 @@
             <div class="account-panel active" id="panel-account">
                 <div class="account-profile-card">
                     <div class="profile-avatar">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="var(--green)" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="var(--green)"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
                         </svg>
                     </div>
-                    <h1 id="welcome-message" style="color: var(--orange); font-size: 2.2rem; margin: 15px 0 5px;">Ciao, Utente!</h1>
+                    <h1 id="welcome-message" style="color: var(--orange); font-size: 2.2rem; margin: 15px 0 5px;">Ciao,
+                        Utente!</h1>
                     <p style="color: #888; font-size: 1rem; margin-bottom: 25px;">Gestisci il tuo profilo RiMangia</p>
 
                     <div class="profile-preferences-box" id="profile-preferences-box">
                         <h3>Le tue preferenze alimentari</h3>
                         <div class="profile-preferences-tags" id="profile-preferences-tags"></div>
-                        <button type="button" class="btn-edit-preferences" onclick="showPreferencesEditor()">Modifica preferenze</button>
+                        <button type="button" class="btn-edit-preferences" onclick="showPreferencesEditor()">Modifica
+                            preferenze</button>
                     </div>
 
                     <button class="btn-logout" onclick="handleLogout()">Esci dall'Account</button>
@@ -214,7 +237,8 @@
                 <div class="panel-header">
                     <h2 style="color: var(--orange); font-size: 2rem;">Le tue Ricette</h2>
                     <a href="aggiungi_ricetta.html" class="btn-add-new">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="vertical-align: middle;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" style="vertical-align: middle;">
                             <path d="M12 5v14M5 12h14" />
                         </svg>
                         Aggiungi Nuova
@@ -242,7 +266,8 @@
     <div class="recipe-modal-overlay" id="recipe-modal-overlay">
         <div class="recipe-modal-container">
             <button class="recipe-modal-close-btn" id="recipe-modal-close-btn" aria-label="Chiudi">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
@@ -254,7 +279,7 @@
                 <div class="recipe-modal-info-bar" id="recipe-modal-info-bar">
                     <!-- Info tag inseriti dinamicamente (es. tempo, porzioni, diete, categoria, ecc.) -->
                 </div>
-                
+
                 <div class="recipe-modal-grid">
                     <!-- Colonna Sinistra: Ingredienti con checkbox -->
                     <div>
@@ -263,14 +288,14 @@
                             <!-- Lista degli ingredienti dinamica -->
                         </div>
                     </div>
-                    
+
                     <!-- Colonna Destra: Procedimento -->
                     <div>
                         <h3 class="recipe-modal-section-title">Preparazione</h3>
                         <div class="modal-steps-list" id="recipe-modal-steps">
                             <!-- Passaggi numerati dinamici -->
                         </div>
-                        
+
                         <!-- Note dell'autore (opzionale) -->
                         <div class="modal-notes-box hidden" id="recipe-modal-notes-box">
                             <strong>Note dello Chef</strong>
@@ -418,49 +443,49 @@
         function handleLogin() {
             const u = document.getElementById('login-username').value;
             const p = document.getElementById('login-password').value;
-            if(!u || !p) return;
+            if (!u || !p) return;
 
             fetch(`${BaseUrl}/auth/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username: u, password: p })
             })
-            .then(r => r.json())
-            .then(data => {
-                if (data.error) {
-                    document.getElementById('login-error').innerText = data.error;
-                } else {
-                    localStorage.setItem("rimangia_user", JSON.stringify(data));
-                    checkAuthState();
-                }
-            })
-            .catch(err => {
-                document.getElementById('login-error').innerText = "Errore di connessione col server.";
-            });
+                .then(r => r.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('login-error').innerText = data.error;
+                    } else {
+                        localStorage.setItem("rimangia_user", JSON.stringify(data));
+                        checkAuthState();
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('login-error').innerText = "Errore di connessione col server.";
+                });
         }
 
         function handleRegister() {
             const u = document.getElementById('reg-username').value;
             const p = document.getElementById('reg-password').value;
-            if(!u || !p) return;
+            if (!u || !p) return;
 
             fetch(`${BaseUrl}/auth/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username: u, password: p })
             })
-            .then(r => r.json())
-            .then(data => {
-                if (data.error) {
-                    document.getElementById('reg-error').innerText = data.error;
-                } else {
-                    localStorage.setItem("rimangia_user", JSON.stringify(data));
-                    checkAuthState();
-                }
-            })
-            .catch(err => {
-                document.getElementById('reg-error').innerText = "Errore di connessione col server.";
-            });
+                .then(r => r.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('reg-error').innerText = data.error;
+                    } else {
+                        localStorage.setItem("rimangia_user", JSON.stringify(data));
+                        checkAuthState();
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('reg-error').innerText = "Errore di connessione col server.";
+                });
         }
 
         // =============================================
@@ -524,31 +549,31 @@
 
             errEl.classList.add("hidden");
             btn.disabled = true;
-                btn.textContent = "Salvataggio...";
+            btn.textContent = "Salvataggio...";
 
             fetch(`${BaseUrl}/user/${user.user_id}/preferences`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ preferences: prefs })
             })
-            .then(async (r) => {
-                const data = await r.json().catch(() => ({}));
-                if (!r.ok || data.error) {
-                    throw new Error(data.error || `Errore server (${r.status})`);
-                }
-                return data;
-            })
-            .then(data => {
-                localStorage.setItem("rimangia_user", JSON.stringify(data));
-                resetPreferencesContinueButton();
-                showDashboard(data);
-            })
-            .catch((err) => {
-                errEl.innerText = err.message || "Errore di connessione. Verifica che il server sia avviato.";
-                errEl.classList.remove("hidden");
-                btn.disabled = false;
-                resetPreferencesContinueButton();
-            });
+                .then(async (r) => {
+                    const data = await r.json().catch(() => ({}));
+                    if (!r.ok || data.error) {
+                        throw new Error(data.error || `Errore server (${r.status})`);
+                    }
+                    return data;
+                })
+                .then(data => {
+                    localStorage.setItem("rimangia_user", JSON.stringify(data));
+                    resetPreferencesContinueButton();
+                    showDashboard(data);
+                })
+                .catch((err) => {
+                    errEl.innerText = err.message || "Errore di connessione. Verifica che il server sia avviato.";
+                    errEl.classList.remove("hidden");
+                    btn.disabled = false;
+                    resetPreferencesContinueButton();
+                });
         }
 
         function resetPreferencesContinueButton() {
@@ -731,18 +756,18 @@
             fetch(`${BaseUrl}/user/${userId}/toggle_save/${recipeId}`, {
                 method: "POST"
             })
-            .then(r => r.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    loadSavedRecipes(userId);
-                    loadAddedRecipes(userId);
-                }
-            })
-            .catch(err => {
-                alert("Impossibile salvare la ricetta al momento.");
-            });
+                .then(r => r.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        loadSavedRecipes(userId);
+                        loadAddedRecipes(userId);
+                    }
+                })
+                .catch(err => {
+                    alert("Impossibile salvare la ricetta al momento.");
+                });
         };
 
         window.editRecipe = (recipeId) => {
@@ -766,26 +791,26 @@
             fetch(`${BaseUrl}/recipes/${recipeId}`, {
                 method: "DELETE"
             })
-            .then(r => r.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                    if (card) { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }
-                } else {
-                    const userStr = localStorage.getItem("rimangia_user");
-                    if (userStr) {
-                        const user = JSON.parse(userStr);
-                        setTimeout(() => {
-                            loadAddedRecipes(user.user_id);
-                            loadSavedRecipes(user.user_id);
-                        }, 300);
+                .then(r => r.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                        if (card) { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }
+                    } else {
+                        const userStr = localStorage.getItem("rimangia_user");
+                        if (userStr) {
+                            const user = JSON.parse(userStr);
+                            setTimeout(() => {
+                                loadAddedRecipes(user.user_id);
+                                loadSavedRecipes(user.user_id);
+                            }, 300);
+                        }
                     }
-                }
-            })
-            .catch(err => {
-                alert("Impossibile eliminare la ricetta al momento.");
-                if (card) { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }
-            });
+                })
+                .catch(err => {
+                    alert("Impossibile eliminare la ricetta al momento.");
+                    if (card) { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }
+                });
         };
 
         // Funzione per reindirizzare al modulo di creazione ricetta
@@ -801,4 +826,5 @@
         };
     </script>
 </body>
+
 </html>

@@ -17,7 +17,7 @@
     <header>
         <nav>
             <div class="logo">
-                <a href="Home.html"><img src="img/Gemini_Generated_Image_od9kg1od9kg1od9k-removebg-preview.png"
+                <a href="index.html"><img src="img/Gemini_Generated_Image_od9kg1od9kg1od9k-removebg-preview.png"
                         alt="RiMangia Logo"></a>
             </div>
             <div class="nav-links">
@@ -992,7 +992,7 @@
             };
 
             // Invia tramite chiamata API esistente o aggiorna se in modalità modifica
-            const targetUrl = isEditMode 
+            const targetUrl = isEditMode
                 ? `http://127.0.0.1:8000/api/recipes/${editRecipeId}`
                 : "http://127.0.0.1:8000/api/recipes/add";
             const targetMethod = isEditMode ? "PUT" : "POST";
@@ -1008,7 +1008,7 @@
                 .then(data => {
                     if (data.success) {
                         messageContainer.className = "success-message";
-                        messageContainer.innerText = isEditMode 
+                        messageContainer.innerText = isEditMode
                             ? "Ricetta modificata con successo! Reindirizzamento..."
                             : "Ricetta aggiunta con successo! Reindirizzamento...";
                         setTimeout(() => {
