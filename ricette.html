@@ -239,7 +239,7 @@
 
             function logInteraction(tipo, valore = "", ricettaId = null) {
                 if (!isUserLoggedIn) return;
-                fetch(`http://127.0.0.1:8000/api/user/${currentUserId}/interactions`, {
+                fetch(`https://gigantic-ignore-wrench.ngrok-free.dev/api/user/${currentUserId}/interactions`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -257,7 +257,7 @@
             let savedPromise = Promise.resolve();
 
             if (isUserLoggedIn) {
-                savedPromise = fetch(`http://127.0.0.1:8000/api/user/${currentUserId}/saved_recipes`)
+                savedPromise = fetch(`https://gigantic-ignore-wrench.ngrok-free.dev/api/user/${currentUserId}/saved_recipes`)
                     .then(response => response.ok ? response.json() : { recipes: [] })
                     .then(data => {
                         if (data.recipes) {
@@ -468,7 +468,7 @@
 
             // Caricamento ed esecuzione iniziale
             savedPromise.then(() => {
-                fetch(`http://127.0.0.1:8000/api/recipes`)
+                fetch(`https://gigantic-ignore-wrench.ngrok-free.dev/api/recipes`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error("Errore nella risposta del server");
@@ -676,7 +676,7 @@
             // Apertura e popolamento del Modale
             function openRecipeModal(recipeId) {
                 logInteraction("click", "", recipeId);
-                fetch(`http://127.0.0.1:8000/api/recipes/${recipeId}`)
+                fetch(`https://gigantic-ignore-wrench.ngrok-free.dev/api/recipes/${recipeId}`)
                     .then(response => {
                         if (!response.ok) throw new Error("Errore caricamento dettagli ricetta");
                         return response.json();
@@ -802,7 +802,7 @@
                     return;
                 }
 
-                fetch(`http://127.0.0.1:8000/api/user/${currentUserId}/toggle_save/${recipeId}`, {
+                fetch(`https://gigantic-ignore-wrench.ngrok-free.dev/api/user/${currentUserId}/toggle_save/${recipeId}`, {
                     method: "POST"
                 })
                     .then(r => r.json())
@@ -834,7 +834,7 @@
                     card.style.transition = 'all 0.3s ease';
                 }
 
-                fetch(`http://127.0.0.1:8000/api/recipes/${recipeId}`, {
+                fetch(`https://gigantic-ignore-wrench.ngrok-free.dev/api/recipes/${recipeId}`, {
                     method: "DELETE"
                 })
                     .then(r => r.json())

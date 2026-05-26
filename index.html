@@ -140,7 +140,7 @@
             let savedPromise = Promise.resolve();
 
             if (isUserLoggedIn) {
-                savedPromise = fetch(`http://127.0.0.1:8000/api/user/${currentUserId}/saved_recipes`)
+                savedPromise = fetch(`https://gigantic-ignore-wrench.ngrok-free.dev/api/user/${currentUserId}/saved_recipes`)
                     .then(response => response.ok ? response.json() : { recipes: [] })
                     .then(data => {
                         if (data.recipes) {
@@ -178,8 +178,8 @@
 
             savedPromise.then(() => {
                 const recipesUrl = isUserLoggedIn
-                    ? `http://127.0.0.1:8000/api/recipes/recommended/${currentUserId}`
-                    : "http://127.0.0.1:8000/api/recipes";
+                    ? `https://gigantic-ignore-wrench.ngrok-free.dev/api/recipes/recommended/${currentUserId}`
+                    : "https://gigantic-ignore-wrench.ngrok-free.dev/api/recipes";
 
                 fetch(recipesUrl)
                     .then(response => {
@@ -218,7 +218,7 @@
                     return;
                 }
 
-                fetch(`http://127.0.0.1:8000/api/user/${currentUserId}/toggle_save/${recipeId}`, {
+                fetch(`https://gigantic-ignore-wrench.ngrok-free.dev/api/user/${currentUserId}/toggle_save/${recipeId}`, {
                     method: "POST"
                 })
                     .then(r => r.json())
@@ -250,7 +250,7 @@
                     card.style.transition = 'all 0.3s ease';
                 }
 
-                fetch(`http://127.0.0.1:8000/api/recipes/${recipeId}`, {
+                fetch(`https://gigantic-ignore-wrench.ngrok-free.dev/api/recipes/${recipeId}`, {
                     method: "DELETE"
                 })
                 .then(r => r.json())

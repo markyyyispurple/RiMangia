@@ -347,7 +347,7 @@
                 document.getElementById("main-image-file").removeAttribute("required");
 
                 // Caricamento dei dati esistenti
-                fetch(`http://127.0.0.1:8000/api/recipes/${editRecipeId}`)
+                fetch(`https://gigantic-ignore-wrench.ngrok-free.dev/api/recipes/${editRecipeId}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.error) {
@@ -993,8 +993,8 @@
 
             // Invia tramite chiamata API esistente o aggiorna se in modalità modifica
             const targetUrl = isEditMode
-                ? `http://127.0.0.1:8000/api/recipes/${editRecipeId}`
-                : "http://127.0.0.1:8000/api/recipes/add";
+                ? `https://gigantic-ignore-wrench.ngrok-free.dev/api/recipes/${editRecipeId}`
+                : "https://gigantic-ignore-wrench.ngrok-free.dev/api/recipes/add";
             const targetMethod = isEditMode ? "PUT" : "POST";
 
             fetch(targetUrl, {

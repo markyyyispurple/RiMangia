@@ -4,7 +4,7 @@
 (function (global) {
     const API_BASE = (window.location.port === "8000")
         ? `${window.location.protocol}//${window.location.host}/api`
-        : "http://127.0.0.1:8000/api";
+        : "https://gigantic-ignore-wrench.ngrok-free.dev/api";
     const PLACEHOLDER_IMAGE = "img/pasta.png";
 
     function normalizeDifficulty(d) {
