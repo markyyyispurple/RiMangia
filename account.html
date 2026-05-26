@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>RiMangia - Account</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <script src="dropdown.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="Home.html"><img src="img/Gemini_Generated_Image_od9kg1od9kg1od9k-removebg-preview.png" alt="RiMangia Logo"></a>
+            </div>
+            <div class="nav-links">
+                <a href="Home.html">Home</a>
+                <a href="ricette.html">Ricette</a>
+                <a href="about.html">About us</a>
+                <a href="support.html">Support</a>
+            </div>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div class="add-recipe-icon">
+                    <a href="#" onclick="navigateToAddRecipe(event)">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--green)" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="account-icon">
+                    <a href="account.html">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--green)" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- SEZIONE AUTH (Visibile se l'utente non è loggato) -->
+        <div id="auth-section" class="auth-container hidden">
+            <!-- Form Login -->
+            <div id="login-form-container">
+                <h2>Accedi</h2>
+                <div class="auth-form">
+                    <input type="text" id="login-username" placeholder="Username" required>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                    <button onclick="handleLogin()">Login</button>
+                    <p id="login-error" style="color: red; font-size: 0.9rem; margin: 0;"></p>
+                </div>
+                <div class="auth-toggle">
+                    Non hai un account? <a onclick="toggleAuthMode()">Registrati</a>
+                </div>
+            </div>
+
+            <!-- Form Register -->
+            <div id="register-form-container" class="hidden">
+                <h2>Crea Account</h2>
+                <div class="auth-form">
+                    <input type="text" id="reg-username" placeholder="Scegli uno Username" required>
+                    <input type="password" id="reg-password" placeholder="Scegli una Password" required>
+                    <button onclick="handleRegister()">Registrati ora</button>
+                    <p id="reg-error" style="color: red; font-size: 0.9rem; margin: 0;"></p>
+                </div>
+                <div class="auth-toggle">
+                    Hai già un account? <a onclick="toggleAuthMode()">Accedi</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ONBOARDING PREFERENZE (Dopo registrazione) -->
+        <section id="preferences-section" class="preferences-onboarding hidden">
+            <div class="preferences-card">
+                <div class="preferences-header">
+                    <span class="preferences-badge">Benvenuto su RiMangia</span>
+                    <h2>Quali sono le tue preferenze?</h2>
+                    <p>Personalizza la tua esperienza scegliendo le caratteristiche dietetiche che ti interessano. Potrai modificarle in qualsiasi momento dal profilo.</p>
+                </div>
+
+                <div class="preference-cards-grid" id="preference-cards-grid">
+                    <label class="preference-card" data-value="Vegetariano">
+                        <input type="checkbox" class="pref-checkbox" value="Vegetariano">
+                        <span class="preference-card-icon vegetariano">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22c-3-4.5-8-8-8-13a8 8 0 0 1 16 0c0 5-5 8.5-8 13z"/>
+                                <path d="M12 9v4"/>
+                            </svg>
+                        </span>
+                        <span class="preference-card-title">Vegetariano</span>
+                        <span class="preference-card-desc">Senza carne e pesce</span>
+                    </label>
+
+                    <label class="preference-card" data-value="Vegano">
+                        <input type="checkbox" class="pref-checkbox" value="Vegano">
+                        <span class="preference-card-icon vegano">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 20h10"/>
+                                <path d="M12 20V10"/>
+                                <path d="M12 10C12 6 8 4 5 6c0 4 3 6 7 4"/>
+                                <path d="M12 10c0-4 4-6 7-4 0 4-3 6-7 4"/>
+                            </svg>
+                        </span>
+                        <span class="preference-card-title">Vegano</span>
+                        <span class="preference-card-desc">100% a base vegetale</span>
+                    </label>
+
+                    <label class="preference-card" data-value="Senza Glutine">
+                        <input type="checkbox" class="pref-checkbox" value="Senza Glutine">
+                        <span class="preference-card-icon senza-glutine">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                            </svg>
+                        </span>
+                        <span class="preference-card-title">Senza Glutine</span>
+                        <span class="preference-card-desc">Adatto a celiaci</span>
+                    </label>
+
+                    <label class="preference-card" data-value="Senza Lattosio">
+                        <input type="checkbox" class="pref-checkbox" value="Senza Lattosio">
+                        <span class="preference-card-icon senza-lattosio">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M8 2h8l4 10H4L8 2z"/>
+                                <path d="M12 12v10"/>
+                                <path d="M8 22h8"/>
+                            </svg>
+                        </span>
+                        <span class="preference-card-title">Senza Lattosio</span>
+                        <span class="preference-card-desc">Senza derivati del latte</span>
+                    </label>
+
+                    <label class="preference-card preference-card-wide" data-value="none" id="pref-card-none">
+                        <input type="checkbox" class="pref-checkbox pref-none" value="none" id="pref-none">
+                        <span class="preference-card-icon nessuna">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M8 12h8"/>
+                            </svg>
+                        </span>
+                        <span class="preference-card-title">Nessuna preferenza</span>
+                        <span class="preference-card-desc">Voglio esplorare tutte le ricette senza filtri</span>
+                    </label>
+                </div>
+
+                <p id="preferences-error" class="preferences-error hidden"></p>
+
+                <button type="button" class="btn-preferences-continue" id="btn-preferences-continue" disabled>
+                    Continua su RiMangia
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- SEZIONE DASHBOARD (Visibile se l'utente è loggato) -->
+        <div id="dashboard-section" class="dashboard-container hidden">
+
+            <!-- TAB NAVIGATION -->
+            <div class="account-tabs" id="account-tabs">
+                <button class="account-tab active" data-tab="account">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Account
+                </button>
+                <button class="account-tab" data-tab="le-tue-ricette">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                    Le Tue Ricette
+                </button>
+                <button class="account-tab" data-tab="ricette-salvate">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    Ricette Salvate
+                </button>
+            </div>
+
+            <!-- PANNELLO 1: ACCOUNT -->
+            <div class="account-panel active" id="panel-account">
+                <div class="account-profile-card">
+                    <div class="profile-avatar">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="var(--green)" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
+                        </svg>
+                    </div>
+                    <h1 id="welcome-message" style="color: var(--orange); font-size: 2.2rem; margin: 15px 0 5px;">Ciao, Utente!</h1>
+                    <p style="color: #888; font-size: 1rem; margin-bottom: 25px;">Gestisci il tuo profilo RiMangia</p>
+
+                    <div class="profile-preferences-box" id="profile-preferences-box">
+                        <h3>Le tue preferenze alimentari</h3>
+                        <div class="profile-preferences-tags" id="profile-preferences-tags"></div>
+                        <button type="button" class="btn-edit-preferences" onclick="showPreferencesEditor()">Modifica preferenze</button>
+                    </div>
+
+                    <button class="btn-logout" onclick="handleLogout()">Esci dall'Account</button>
+                </div>
+            </div>
+
+            <!-- PANNELLO 2: LE TUE RICETTE -->
+            <div class="account-panel" id="panel-le-tue-ricette">
+                <div class="panel-header">
+                    <h2 style="color: var(--orange); font-size: 2rem;">Le tue Ricette</h2>
+                    <a href="aggiungi_ricetta.html" class="btn-add-new">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="vertical-align: middle;">
+                            <path d="M12 5v14M5 12h14" />
+                        </svg>
+                        Aggiungi Nuova
+                    </a>
+                </div>
+                <div class="recipe-grid" id="added-recipes-grid">
+                    <!-- Popolato dinamicamente -->
+                </div>
+            </div>
+
+            <!-- PANNELLO 3: RICETTE SALVATE -->
+            <div class="account-panel" id="panel-ricette-salvate">
+                <div class="panel-header">
+                    <h2 style="color: var(--green); font-size: 2rem;">Ricette Salvate</h2>
+                </div>
+                <div class="recipe-grid" id="saved-recipes-grid">
+                    <!-- Popolato dinamicamente -->
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- MODALE PREMIUM DETTAGLIO RICETTA -->
+    <div class="recipe-modal-overlay" id="recipe-modal-overlay">
+        <div class="recipe-modal-container">
+            <button class="recipe-modal-close-btn" id="recipe-modal-close-btn" aria-label="Chiudi">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <img class="recipe-modal-header-img" id="recipe-modal-img" src="" alt="">
+            <div class="recipe-modal-body">
+                <h2 class="recipe-modal-title" id="recipe-modal-title">Titolo Ricetta</h2>
+                <p class="recipe-modal-description hidden" id="recipe-modal-description"></p>
+                <div class="recipe-modal-info-bar" id="recipe-modal-info-bar">
+                    <!-- Info tag inseriti dinamicamente (es. tempo, porzioni, diete, categoria, ecc.) -->
+                </div>
+                
+                <div class="recipe-modal-grid">
+                    <!-- Colonna Sinistra: Ingredienti con checkbox -->
+                    <div>
+                        <h3 class="recipe-modal-section-title">Ingredienti</h3>
+                        <div class="modal-ingredients-list" id="recipe-modal-ingredients">
+                            <!-- Lista degli ingredienti dinamica -->
+                        </div>
+                    </div>
+                    
+                    <!-- Colonna Destra: Procedimento -->
+                    <div>
+                        <h3 class="recipe-modal-section-title">Preparazione</h3>
+                        <div class="modal-steps-list" id="recipe-modal-steps">
+                            <!-- Passaggi numerati dinamici -->
+                        </div>
+                        
+                        <!-- Note dell'autore (opzionale) -->
+                        <div class="modal-notes-box hidden" id="recipe-modal-notes-box">
+                            <strong>Note dello Chef</strong>
+                            <p id="recipe-modal-notes"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="recipe-ui.js"></script>
+    <script>
+        // Gestione Auth Mode (Login vs Register)
+        let isLoginMode = true;
+        const BaseUrl = "http://127.0.0.1:8000/api";
+        let openRecipeModal;
+
+        function toggleAuthMode() {
+            isLoginMode = !isLoginMode;
+            document.getElementById('login-form-container').classList.toggle('hidden', !isLoginMode);
+            document.getElementById('register-form-container').classList.toggle('hidden', isLoginMode);
+            document.getElementById('login-error').innerText = "";
+            document.getElementById('reg-error').innerText = "";
+        }
+
+        // Init App
+        document.addEventListener("DOMContentLoaded", () => {
+            checkAuthState();
+            setupTabs();
+            setupPreferencesUI();
+
+            if (typeof RecipeUI !== "undefined") {
+                const modalStuff = RecipeUI.initRecipeModal({
+                    isUserLoggedIn: true,
+                    onLogClick: (recipeId) => {
+                        const userStr = localStorage.getItem("rimangia_user");
+                        if (userStr) {
+                            const user = JSON.parse(userStr);
+                            fetch(`${BaseUrl}/user/${user.user_id}/interactions`, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    tipo_interazione: "click",
+                                    valore: "",
+                                    ricetta_id: recipeId
+                                })
+                            }).catch(err => console.error("Errore log interazione:", err));
+                        }
+                    }
+                });
+                openRecipeModal = modalStuff.openRecipeModal;
+            }
+        });
+
+        function checkAuthState() {
+            const userStr = localStorage.getItem("rimangia_user");
+            if (userStr) {
+                try {
+                    const user = JSON.parse(userStr);
+                    if (!user || !user.username || !user.user_id) {
+                        localStorage.removeItem("rimangia_user");
+                        showAuth();
+                        return;
+                    }
+                    if (user.needs_preferences) {
+                        showPreferences(user);
+                    } else {
+                        showDashboard(user);
+                    }
+                } catch (e) {
+                    localStorage.removeItem("rimangia_user");
+                    showAuth();
+                }
+            } else {
+                showAuth();
+            }
+        }
+
+        function showAuth() {
+            document.getElementById('auth-section').classList.remove('hidden');
+            document.getElementById('preferences-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.add('hidden');
+        }
+
+        function showPreferences(user) {
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.add('hidden');
+            document.getElementById('preferences-section').classList.remove('hidden');
+            resetPreferencesForm();
+        }
+
+        function showDashboard(user) {
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('preferences-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+            document.getElementById('welcome-message').innerText = `Ciao, ${user.username}!`;
+            renderProfilePreferences(user.preferences || "");
+
+            // Naviga al pannello richiesto dall'hash
+            const hash = window.location.hash.replace('#', '') || 'account';
+            switchTab(hash);
+
+            // Carica i dati
+            loadSavedRecipes(user.user_id);
+            loadAddedRecipes(user.user_id);
+        }
+
+        // =============================================
+        // SISTEMA TABS
+        // =============================================
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.account-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.getAttribute('data-tab');
+                    switchTab(tabName);
+                    // Aggiorna l'hash nell'URL senza ricaricare
+                    history.replaceState(null, null, `#${tabName}`);
+                });
+            });
+
+            // Ascolta cambi di hash (es. dal dropdown di un'altra pagina)
+            window.addEventListener('hashchange', () => {
+                const hash = window.location.hash.replace('#', '') || 'account';
+                switchTab(hash);
+            });
+        }
+
+        function switchTab(tabName) {
+            // Aggiorna tabs attivi
+            document.querySelectorAll('.account-tab').forEach(t => t.classList.remove('active'));
+            const targetTab = document.querySelector(`.account-tab[data-tab="${tabName}"]`);
+            if (targetTab) targetTab.classList.add('active');
+
+            // Mostra il pannello corrispondente
+            document.querySelectorAll('.account-panel').forEach(p => p.classList.remove('active'));
+            const targetPanel = document.getElementById(`panel-${tabName}`);
+            if (targetPanel) targetPanel.classList.add('active');
+        }
+
+        // =============================================
+        // AUTH
+        // =============================================
+        function handleLogin() {
+            const u = document.getElementById('login-username').value;
+            const p = document.getElementById('login-password').value;
+            if(!u || !p) return;
+
+            fetch(`${BaseUrl}/auth/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username: u, password: p })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('login-error').innerText = data.error;
+                } else {
+                    localStorage.setItem("rimangia_user", JSON.stringify(data));
+                    checkAuthState();
+                }
+            })
+            .catch(err => {
+                document.getElementById('login-error').innerText = "Errore di connessione col server.";
+            });
+        }
+
+        function handleRegister() {
+            const u = document.getElementById('reg-username').value;
+            const p = document.getElementById('reg-password').value;
+            if(!u || !p) return;
+
+            fetch(`${BaseUrl}/auth/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username: u, password: p })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('reg-error').innerText = data.error;
+                } else {
+                    localStorage.setItem("rimangia_user", JSON.stringify(data));
+                    checkAuthState();
+                }
+            })
+            .catch(err => {
+                document.getElementById('reg-error').innerText = "Errore di connessione col server.";
+            });
+        }
+
+        // =============================================
+        // PREFERENZE ALIMENTARI
+        // =============================================
+        function setupPreferencesUI() {
+            const grid = document.getElementById("preference-cards-grid");
+            const btnContinue = document.getElementById("btn-preferences-continue");
+            const prefNone = document.getElementById("pref-none");
+
+            grid.querySelectorAll(".pref-checkbox").forEach(checkbox => {
+                checkbox.addEventListener("change", () => {
+                    const card = checkbox.closest(".preference-card");
+
+                    if (checkbox.classList.contains("pref-none") && checkbox.checked) {
+                        grid.querySelectorAll(".pref-checkbox:not(.pref-none)").forEach(cb => {
+                            cb.checked = false;
+                            cb.closest(".preference-card").classList.remove("selected");
+                        });
+                    } else if (!checkbox.classList.contains("pref-none") && checkbox.checked) {
+                        prefNone.checked = false;
+                        document.getElementById("pref-card-none").classList.remove("selected");
+                    }
+
+                    card.classList.toggle("selected", checkbox.checked);
+                    updatePreferencesContinueState();
+                });
+            });
+
+            btnContinue.addEventListener("click", savePreferencesAndContinue);
+        }
+
+        function resetPreferencesForm() {
+            document.querySelectorAll(".pref-checkbox").forEach(cb => {
+                cb.checked = false;
+                cb.closest(".preference-card").classList.remove("selected");
+            });
+            document.getElementById("preferences-error").classList.add("hidden");
+            updatePreferencesContinueState();
+        }
+
+        function updatePreferencesContinueState() {
+            const anyChecked = document.querySelectorAll(".pref-checkbox:checked").length > 0;
+            document.getElementById("btn-preferences-continue").disabled = !anyChecked;
+        }
+
+        function getSelectedPreferences() {
+            const noneChecked = document.getElementById("pref-none").checked;
+            if (noneChecked) return [];
+            return Array.from(document.querySelectorAll(".pref-checkbox:checked:not(.pref-none)"))
+                .map(cb => cb.value);
+        }
+
+        function savePreferencesAndContinue() {
+            const userStr = localStorage.getItem("rimangia_user");
+            if (!userStr) return;
+            const user = JSON.parse(userStr);
+            const prefs = getSelectedPreferences();
+            const errEl = document.getElementById("preferences-error");
+            const btn = document.getElementById("btn-preferences-continue");
+
+            errEl.classList.add("hidden");
+            btn.disabled = true;
+                btn.textContent = "Salvataggio...";
+
+            fetch(`${BaseUrl}/user/${user.user_id}/preferences`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ preferences: prefs })
+            })
+            .then(async (r) => {
+                const data = await r.json().catch(() => ({}));
+                if (!r.ok || data.error) {
+                    throw new Error(data.error || `Errore server (${r.status})`);
+                }
+                return data;
+            })
+            .then(data => {
+                localStorage.setItem("rimangia_user", JSON.stringify(data));
+                resetPreferencesContinueButton();
+                showDashboard(data);
+            })
+            .catch((err) => {
+                errEl.innerText = err.message || "Errore di connessione. Verifica che il server sia avviato.";
+                errEl.classList.remove("hidden");
+                btn.disabled = false;
+                resetPreferencesContinueButton();
+            });
+        }
+
+        function resetPreferencesContinueButton() {
+            const btn = document.getElementById("btn-preferences-continue");
+            btn.innerHTML = `Continua su RiMangia
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                    <polyline points="12 5 19 12 12 19"/>
+                </svg>`;
+            updatePreferencesContinueState();
+        }
+
+        function renderProfilePreferences(prefsStr) {
+            const container = document.getElementById("profile-preferences-tags");
+            container.innerHTML = "";
+            if (!prefsStr || !prefsStr.trim()) {
+                container.innerHTML = '<span class="profile-pref-tag profile-pref-tag-none">Nessuna preferenza specifica</span>';
+                return;
+            }
+            prefsStr.split(",").forEach(tag => {
+                const t = tag.trim();
+                if (!t) return;
+                const span = document.createElement("span");
+                span.className = `profile-pref-tag ${t.toLowerCase().replace(/\s+/g, "-")}`;
+                span.innerText = t;
+                container.appendChild(span);
+            });
+        }
+
+        function showPreferencesEditor() {
+            const userStr = localStorage.getItem("rimangia_user");
+            if (!userStr) return;
+            const user = JSON.parse(userStr);
+            user.needs_preferences = true;
+            localStorage.setItem("rimangia_user", JSON.stringify(user));
+
+            const prefs = (user.preferences || "").split(",").map(t => t.trim()).filter(Boolean);
+            showPreferences(user);
+            resetPreferencesForm();
+
+            if (prefs.length === 0) {
+                const noneCb = document.getElementById("pref-none");
+                noneCb.checked = true;
+                document.getElementById("pref-card-none").classList.add("selected");
+            } else {
+                prefs.forEach(val => {
+                    const cb = document.querySelector(`.pref-checkbox[value="${val}"]`);
+                    if (cb) {
+                        cb.checked = true;
+                        cb.closest(".preference-card").classList.add("selected");
+                    }
+                });
+            }
+            updatePreferencesContinueState();
+        }
+
+        function handleLogout() {
+            localStorage.removeItem("rimangia_user");
+            checkAuthState();
+        }
+
+        // =============================================
+        // CARICAMENTO RICETTE SALVATE
+        // =============================================
+        const savedRecipeIds = new Set();
+
+        function loadSavedRecipes(userId) {
+            const recipeGrid = document.getElementById("saved-recipes-grid");
+            recipeGrid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:#999;">Caricamento ricette salvate...</p>`;
+
+            return fetch(`${BaseUrl}/user/${userId}/saved_recipes`)
+                .then(r => r.json())
+                .then(data => {
+                    recipeGrid.innerHTML = "";
+                    savedRecipeIds.clear();
+                    if (!data.recipes || data.recipes.length === 0) {
+                        recipeGrid.innerHTML = `
+                            <div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; color: #888;">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ddd" stroke-width="1.5" style="margin-bottom: 15px;">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                                <p style="font-size: 1.1rem;">Non hai ancora salvato nessuna ricetta.</p>
+                                <p style="font-size: 0.9rem; color: #aaa; margin-top: 5px;">Esplora le ricette e tocca il cuore per salvarle!</p>
+                            </div>`;
+                        return;
+                    }
+
+                    data.recipes.forEach((recipe, idx) => {
+                        savedRecipeIds.add(recipe.id);
+                        const userStr = localStorage.getItem("rimangia_user");
+                        const currentUser = userStr ? JSON.parse(userStr) : null;
+                        const isAdmin = currentUser && currentUser.username === 'admin';
+
+                        RecipeUI.appendRecipeCard(recipeGrid, recipe, {
+                            savedIds: savedRecipeIds,
+                            isAdmin,
+                            openRecipeModal,
+                            animateIndex: idx
+                        });
+                    });
+                })
+                .catch(err => {
+                    recipeGrid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:red;'>Errore nel recupero delle ricette.</p>";
+                });
+        }
+
+        // =============================================
+        // CARICAMENTO RICETTE AGGIUNTE
+        // =============================================
+        function loadAddedRecipes(userId) {
+            const recipeGrid = document.getElementById("added-recipes-grid");
+            recipeGrid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:#999;">Caricamento le tue ricette...</p>`;
+
+            fetch(`${BaseUrl}/user/${userId}/added_recipes`)
+                .then(r => r.json())
+                .then(data => {
+                    recipeGrid.innerHTML = "";
+                    if (!data.recipes || data.recipes.length === 0) {
+                        recipeGrid.innerHTML = `
+                            <div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; color: #888;">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ddd" stroke-width="1.5" style="margin-bottom: 15px;">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                                <p style="font-size: 1.1rem;">Non hai ancora aggiunto nessuna ricetta.</p>
+                                <a href="aggiungi_ricetta.html" class="add-dynamic-btn" style="display: inline-flex; text-decoration: none; width: auto; padding: 10px 20px; border-style: solid; margin-top: 15px;">
+                                    Aggiungi la tua prima ricetta!
+                                </a>
+                            </div>`;
+                        return;
+                    }
+
+                    data.recipes.forEach(recipe => {
+                        const card = document.createElement("div");
+                        card.className = "recipe-card";
+                        card.id = `added-card-${recipe.id}`;
+                        const diffLevel = recipe.difficulty >= 5 ? 3 : Math.max(1, Math.min(3, recipe.difficulty));
+                        const stars = "★".repeat(diffLevel);
+
+                        card.innerHTML = `
+                            <div class="card-manage-actions">
+                                <button class="card-manage-btn edit-btn" onclick="editRecipe(${recipe.id})" title="Modifica">
+                                    <svg width="16" height="16" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                </button>
+                                <button class="card-manage-btn delete-btn" onclick="deleteRecipe(${recipe.id})" title="Elimina">
+                                    <svg width="16" height="16" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <img src="${recipe.image}" alt="${recipe.title}" onerror="this.src='img/pasta.png'">
+                            <div class="recipe-info">
+                                <h3>${recipe.title}</h3>
+                                <p style="font-size: 0.9rem; color: #666; margin-bottom: 5px;">
+                                    ⏱ ${recipe.prep_time} min | <span style="color: var(--yellow); font-weight: bold; letter-spacing: 2px;">${stars}</span>
+                                </p>
+                            </div>
+                        `;
+                        recipeGrid.appendChild(card);
+                    });
+                })
+                .catch(err => {
+                    recipeGrid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:red;'>Errore nel recupero delle tue ricette.</p>";
+                });
+        }
+
+        // =============================================
+        // AZIONI RICETTE
+        // =============================================
+        window.toggleSaveRecipe = (recipeId, btn) => {
+            const userStr = localStorage.getItem("rimangia_user");
+            if (!userStr) return;
+            let currentUser = JSON.parse(userStr);
+            const userId = currentUser.user_id;
+
+            fetch(`${BaseUrl}/user/${userId}/toggle_save/${recipeId}`, {
+                method: "POST"
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    loadSavedRecipes(userId);
+                    loadAddedRecipes(userId);
+                }
+            })
+            .catch(err => {
+                alert("Impossibile salvare la ricetta al momento.");
+            });
+        };
+
+        window.editRecipe = (recipeId) => {
+            window.location.href = `aggiungi_ricetta.html?edit=${recipeId}`;
+        };
+
+        window.deleteRecipe = (recipeId, btn) => {
+            if (!confirm("Sei sicuro di voler eliminare questa ricetta?")) return;
+
+            let card = btn ? btn.closest('.recipe-card') : null;
+            if (!card) {
+                card = document.getElementById(`added-card-${recipeId}`);
+            }
+
+            if (card) {
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.85)';
+                card.style.transition = 'all 0.3s ease';
+            }
+
+            fetch(`${BaseUrl}/recipes/${recipeId}`, {
+                method: "DELETE"
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    if (card) { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }
+                } else {
+                    const userStr = localStorage.getItem("rimangia_user");
+                    if (userStr) {
+                        const user = JSON.parse(userStr);
+                        setTimeout(() => {
+                            loadAddedRecipes(user.user_id);
+                            loadSavedRecipes(user.user_id);
+                        }, 300);
+                    }
+                }
+            })
+            .catch(err => {
+                alert("Impossibile eliminare la ricetta al momento.");
+                if (card) { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }
+            });
+        };
+
+        // Funzione per reindirizzare al modulo di creazione ricetta
+        window.navigateToAddRecipe = (event) => {
+            event.preventDefault();
+            const userStr = localStorage.getItem("rimangia_user");
+            if (!userStr) {
+                alert("Devi accedere per poter aggiungere nuove ricette!");
+                window.location.href = "account.html";
+            } else {
+                window.location.href = "aggiungi_ricetta.html";
+            }
+        };
+    </script>
+</body>
+</html>

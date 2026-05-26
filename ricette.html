@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>RiMangia - Ricette</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <script src="dropdown.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="Home.html"><img src="img/Gemini_Generated_Image_od9kg1od9kg1od9k-removebg-preview.png" alt="RiMangia Logo"></a>
+            </div>
+            <div class="nav-links">
+                <a href="Home.html">Home</a>
+                <a href="ricette.html" style="color: var(--orange);">Ricette</a>
+                <a href="about.html">About us</a>
+                <a href="support.html">Support</a>
+            </div>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div class="add-recipe-icon">
+                    <a href="#" onclick="navigateToAddRecipe(event)">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--green)" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="account-icon">
+                    <a href="account.html">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--green)" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="consigliate">
+            <div class="section-header" style="text-align: center; margin-bottom: 40px;">
+                <h1 style="color: var(--orange); font-size: 3rem; margin-top: 20px;">Tutte le Ricette</h1>
+                <p style="color: #666; font-size: 1.2rem; margin-top: 10px;">Scopri il nostro catalogo completo di piatti deliziosi e sani.</p>
+            </div>
+
+            <!-- Sezione di Ricerca e Filtri -->
+            <div class="search-filter-section">
+                <div class="search-bar-container">
+                    <div class="search-input-wrapper">
+                        <input type="text" id="recipe-search-input" placeholder="Cerca ricette o ingredienti... (es. pasta, pollo, zucchine)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
+                    <button class="btn-toggle-filters" id="btn-toggle-filters">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="4" y1="21" x2="4" y2="14"></line>
+                            <line x1="4" y1="10" x2="4" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12" y2="3"></line>
+                            <line x1="20" y1="21" x2="20" y2="16"></line>
+                            <line x1="20" y1="12" x2="20" y2="3"></line>
+                            <line x1="1" y1="14" x2="7" y2="14"></line>
+                            <line x1="9" y1="8" x2="15" y2="8"></line>
+                            <line x1="17" y1="16" x2="23" y2="16"></line>
+                        </svg>
+                        <span>Filtri Avanzati</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="chevron">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Pannello Filtri Avanzati -->
+                <div class="advanced-filters-panel" id="advanced-filters-panel">
+                    <div class="filters-grid">
+                        
+                        <!-- Filtro Ingredienti Dinamico (Chips) -->
+                        <div class="filter-group">
+                            <h4>Filtra per Ingredienti (Includi)</h4>
+                            <p style="font-size: 0.85rem; color: #666; margin-bottom: 5px;">Digita un ingrediente e premi Invio per aggiungerlo:</p>
+                            <div class="ingredients-chip-wrapper" id="ingredients-chip-wrapper">
+                                <!-- Le chip degli ingredienti compariranno qui -->
+                                <input type="text" id="ingredients-chip-input" class="ingredients-chip-input" placeholder="Aggiungi ingrediente...">
+                            </div>
+                        </div>
+
+                        <!-- Filtro Dieta (Badges) -->
+                        <div class="filter-group">
+                            <h4>Caratteristiche Dietetiche</h4>
+                            <div class="filter-pills" id="dietary-pills-container">
+                                <span class="filter-pill" data-value="Vegetariano">Vegetariano</span>
+                                <span class="filter-pill" data-value="Vegano">Vegano</span>
+                                <span class="filter-pill" data-value="Senza Glutine">Senza Glutine</span>
+                                <span class="filter-pill" data-value="Senza Lattosio">Senza Lattosio</span>
+                            </div>
+                        </div>
+
+                        <!-- Filtro Difficoltà -->
+                        <div class="filter-group">
+                            <h4>Difficoltà massima</h4>
+                            <div class="filter-pills" id="difficulty-pills-container">
+                                <span class="filter-pill difficulty-pill active" data-value="all">Tutte</span>
+                                <span class="filter-pill difficulty-pill" data-value="1">Facile ★</span>
+                                <span class="filter-pill difficulty-pill" data-value="2">Media ★★</span>
+                                <span class="filter-pill difficulty-pill" data-value="3">Difficile ★★★</span>
+                            </div>
+                        </div>
+
+                        <!-- Slider Tempo Prep -->
+                        <div class="filter-group">
+                            <div class="slider-container">
+                                <div class="slider-info">
+                                    <span>Tempo Preparazione Massimo</span>
+                                    <span class="value" id="max-time-display">Tutti i tempi</span>
+                                </div>
+                                <input type="range" id="filter-max-time" class="filter-slider" min="5" max="120" step="5" value="120">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Azioni Filtri -->
+                    <div class="filters-actions">
+                        <button class="btn-clear-filters" id="btn-clear-filters">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 6h18"></path>
+                                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                            </svg>
+                            <span>Resetta Filtri</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recipe-grid" id="all-recipes-grid">
+                <!-- I caricamenti statici verranno sostituiti dai dati API -->
+                <div class="recipe-card">
+                    <img src="img/pasta.png" alt="Caricamento">
+                    <div class="recipe-info">
+                        <h3>Caricamento ricette...</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODALE PREMIUM DETTAGLIO RICETTA -->
+    <div class="recipe-modal-overlay" id="recipe-modal-overlay">
+            <div class="recipe-modal-container">
+                <button class="recipe-modal-close-btn" id="recipe-modal-close-btn" aria-label="Chiudi">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+                <img class="recipe-modal-header-img" id="recipe-modal-img" src="" alt="">
+                <div class="recipe-modal-body">
+                    <h2 class="recipe-modal-title" id="recipe-modal-title">Titolo Ricetta</h2>
+                    <p class="recipe-modal-description hidden" id="recipe-modal-description"></p>
+                    <div class="recipe-modal-info-bar" id="recipe-modal-info-bar">
+                        <!-- Info tag inseriti dinamicamente (es. tempo, porzioni, diete, categoria, ecc.) -->
+                    </div>
+                    
+                    <div class="recipe-modal-grid">
+                        <!-- Colonna Sinistra: Ingredienti con checkbox -->
+                        <div>
+                            <h3 class="recipe-modal-section-title">Ingredienti</h3>
+                            <div class="modal-ingredients-list" id="recipe-modal-ingredients">
+                                <!-- Lista degli ingredienti dinamica -->
+                            </div>
+                        </div>
+                        
+                        <!-- Colonna Destra: Procedimento -->
+                        <div>
+                            <h3 class="recipe-modal-section-title">Preparazione</h3>
+                            <div class="modal-steps-list" id="recipe-modal-steps">
+                                <!-- Passaggi numerati dinamici -->
+                            </div>
+                            
+                            <!-- Note dell'autore (opzionale) -->
+                            <div class="modal-notes-box hidden" id="recipe-modal-notes-box">
+                                <strong>Note dello Chef</strong>
+                                <p id="recipe-modal-notes"></p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="recipe-ui.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const recipeGrid = document.getElementById("all-recipes-grid");
+
+            // Verifica se l'utente è loggato
+            const userStr = localStorage.getItem("rimangia_user");
+            let currentUser = null;
+            let currentUserId = null;
+            let isUserLoggedIn = false;
+
+            if (userStr) {
+                try {
+                    currentUser = JSON.parse(userStr);
+                    if (currentUser && currentUser.user_id) {
+                        currentUserId = currentUser.user_id;
+                        isUserLoggedIn = true;
+                    }
+                } catch(e) {
+                    console.error("Errore parsing utente:", e);
+                }
+            }
+
+            function logInteraction(tipo, valore = "", ricettaId = null) {
+                if (!isUserLoggedIn) return;
+                fetch(`http://127.0.0.1:8000/api/user/${currentUserId}/interactions`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        tipo_interazione: tipo,
+                        valore: valore,
+                        ricetta_id: ricettaId
+                    })
+                }).catch(err => console.error("Errore log interazione:", err));
+            }
+
+            let searchLogTimeout = null;
+
+            // Carica prima i preferiti dell'utente per impostare lo stato iniziale dei cuori
+            const savedIds = new Set();
+            let savedPromise = Promise.resolve();
+
+            if (isUserLoggedIn) {
+                savedPromise = fetch(`http://127.0.0.1:8000/api/user/${currentUserId}/saved_recipes`)
+                    .then(response => response.ok ? response.json() : { recipes: [] })
+                    .then(data => {
+                        if (data.recipes) {
+                            data.recipes.forEach(r => savedIds.add(r.id));
+                        }
+                    })
+                    .catch(err => console.error("Errore caricamento ricette salvate:", err));
+            }
+
+            // Memorizzazione globale delle ricette per il filtraggio client-side
+            let allRecipes = [];
+            const selectedDiets = new Set();
+            const selectedIngredients = new Set();
+            let selectedDifficulty = 'all';
+
+            // Elementi DOM Filtri
+            const recipeSearchInput = document.getElementById("recipe-search-input");
+            const btnToggleFilters = document.getElementById("btn-toggle-filters");
+            const advancedFiltersPanel = document.getElementById("advanced-filters-panel");
+            const ingredientsChipWrapper = document.getElementById("ingredients-chip-wrapper");
+            const ingredientsChipInput = document.getElementById("ingredients-chip-input");
+            const dietaryPillsContainer = document.getElementById("dietary-pills-container");
+            const difficultyPillsContainer = document.getElementById("difficulty-pills-container");
+            const filterMaxTime = document.getElementById("filter-max-time");
+            const maxTimeDisplay = document.getElementById("max-time-display");
+            const btnClearFilters = document.getElementById("btn-clear-filters");
+
+            function normalizeDifficulty(d) {
+                const n = parseInt(d) || 1;
+                if (n >= 5) return 3;
+                return Math.max(1, Math.min(3, n));
+            }
+
+            function formatDifficultyStars(d) {
+                return "★".repeat(normalizeDifficulty(d));
+            }
+
+            function ingredientsSearchText(raw) {
+                if (!raw) return "";
+                const t = String(raw).trim();
+                if (t.startsWith("[")) {
+                    try {
+                        return JSON.parse(t).map(i => {
+                            if (typeof i === "object" && i !== null) {
+                                return `${i.qty || ""} ${i.unit || ""} ${i.name || ""}`.trim();
+                            }
+                            return String(i);
+                        }).join(" ").toLowerCase();
+                    } catch (e) { /* formato legacy */ }
+                }
+                return t.toLowerCase();
+            }
+
+            function parseIngredientsForDisplay(raw) {
+                if (!raw) return [];
+                const t = String(raw).trim();
+                if (t.startsWith("[")) {
+                    try {
+                        return JSON.parse(t).map(i => {
+                            if (typeof i === "object" && i !== null) {
+                                const qty = i.qty ? `${i.qty} ` : "";
+                                const unit = i.unit ? `${i.unit} ` : "";
+                                return `${qty}${unit}${i.name || ""}`.trim();
+                            }
+                            return String(i);
+                        }).filter(Boolean);
+                    } catch (e) { /* formato legacy */ }
+                }
+                return t.split(",").map(s => s.trim()).filter(Boolean);
+            }
+
+            // Toggle pannello filtri
+            btnToggleFilters.addEventListener("click", () => {
+                advancedFiltersPanel.classList.toggle("show");
+                btnToggleFilters.classList.toggle("active");
+            });
+
+            // Gestione dei tag di ingredienti (chips)
+            ingredientsChipInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === ",") {
+                    e.preventDefault();
+                    const value = ingredientsChipInput.value.trim().replace(",", "");
+                    if (value && !selectedIngredients.has(value)) {
+                        addIngredientChip(value);
+                        ingredientsChipInput.value = "";
+                        filterAndRenderRecipes();
+                    }
+                } else if (e.key === "Backspace" && ingredientsChipInput.value === "") {
+                    // Cancella l'ultimo ingrediente inserito
+                    const lastChip = ingredientsChipWrapper.querySelector(".ingredient-chip:last-of-type");
+                    if (lastChip) {
+                        const tag = lastChip.getAttribute("data-tag");
+                        selectedIngredients.delete(tag);
+                        lastChip.remove();
+                        filterAndRenderRecipes();
+                    }
+                }
+            });
+
+            // Focus automatico sul wrapper quando cliccato
+            ingredientsChipWrapper.addEventListener("click", (e) => {
+                if (e.target === ingredientsChipWrapper) {
+                    ingredientsChipInput.focus();
+                }
+            });
+
+            function addIngredientChip(tag) {
+                selectedIngredients.add(tag);
+                logInteraction("ingrediente_cercato", tag);
+
+                const chip = document.createElement("div");
+                chip.className = "ingredient-chip";
+                chip.setAttribute("data-tag", tag);
+                chip.innerHTML = `
+                    ${tag}
+                    <span onclick="removeIngredientChip('${tag}', this)">&times;</span>
+                `;
+                
+                // Inserisci la chip prima dell'input di testo
+                ingredientsChipWrapper.insertBefore(chip, ingredientsChipInput);
+            }
+
+            window.removeIngredientChip = (tag, span) => {
+                selectedIngredients.delete(tag);
+                span.closest(".ingredient-chip").remove();
+                filterAndRenderRecipes();
+            };
+
+            // Gestione dei pill dietetici
+            dietaryPillsContainer.querySelectorAll(".filter-pill").forEach(pill => {
+                pill.addEventListener("click", () => {
+                    const value = pill.getAttribute("data-value");
+                    pill.classList.toggle("active");
+                    if (selectedDiets.has(value)) {
+                        selectedDiets.delete(value);
+                    } else {
+                        selectedDiets.add(value);
+                    }
+                    filterAndRenderRecipes();
+                });
+            });
+
+            // Gestione delle pill difficoltà
+            difficultyPillsContainer.querySelectorAll(".filter-pill").forEach(pill => {
+                pill.addEventListener("click", () => {
+                    difficultyPillsContainer.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+                    pill.classList.add("active");
+                    selectedDifficulty = pill.getAttribute("data-value");
+                    filterAndRenderRecipes();
+                });
+            });
+
+            // Gestione dei range slider
+            filterMaxTime.addEventListener("input", () => {
+                const val = parseInt(filterMaxTime.value);
+                maxTimeDisplay.innerText = val === 120 ? "Tutti i tempi" : `Fino a ${val} min`;
+                filterAndRenderRecipes();
+            });
+
+            // Reset dei filtri
+            btnClearFilters.addEventListener("click", () => {
+                recipeSearchInput.value = "";
+                
+                // Rimuovi chip visivi e pulisci Set
+                ingredientsChipWrapper.querySelectorAll(".ingredient-chip").forEach(c => c.remove());
+                selectedIngredients.clear();
+                ingredientsChipInput.value = "";
+
+                // Reset badge dietetici
+                dietaryPillsContainer.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+                selectedDiets.clear();
+
+                // Reset difficoltà
+                difficultyPillsContainer.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+                difficultyPillsContainer.querySelector('[data-value="all"]').classList.add("active");
+                selectedDifficulty = 'all';
+
+                // Reset sliders
+                filterMaxTime.value = 120;
+                maxTimeDisplay.innerText = "Tutti i tempi";
+
+                filterAndRenderRecipes();
+            });
+
+            function logSearchInteraction() {
+                const q = recipeSearchInput.value.trim();
+                if (q.length >= 2) {
+                    logInteraction("testo_cercato", q);
+                }
+            }
+
+            // Barra di ricerca ad evento input istantaneo
+            recipeSearchInput.addEventListener("input", () => {
+                filterAndRenderRecipes();
+                const q = recipeSearchInput.value.trim();
+                if (q.length >= 2) {
+                    clearTimeout(searchLogTimeout);
+                    searchLogTimeout = setTimeout(logSearchInteraction, 800);
+                }
+            });
+
+            recipeSearchInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    clearTimeout(searchLogTimeout);
+                    logSearchInteraction();
+                }
+            });
+
+            // Caricamento ed esecuzione iniziale
+            savedPromise.then(() => {
+                fetch(`http://127.0.0.1:8000/api/recipes`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Errore nella risposta del server");
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        allRecipes = data.recipes || [];
+                        renderRecipes(allRecipes);
+                    })
+                    .catch(error => {
+                        console.error("Errore di connessione:", error);
+                        recipeGrid.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: #888;'>Connetti il server Python per vedere le ricette.</p>";
+                    });
+            });
+
+            // Funzione di filtraggio globale
+            function filterAndRenderRecipes() {
+                const searchVal = recipeSearchInput.value.toLowerCase().trim();
+                const maxTime = parseInt(filterMaxTime.value);
+                const filtered = allRecipes.filter(recipe => {
+                    // 1. Ricerca testuale per Titolo o per Ingredienti inclusi nella stringa
+                    const titleMatch = recipe.title.toLowerCase().includes(searchVal);
+                    const ingredientTextMatch = ingredientsSearchText(recipe.ingredients).includes(searchVal);
+                    
+                    if (searchVal && !titleMatch && !ingredientTextMatch) {
+                        return false;
+                    }
+
+                    // 2. Filtro Ingredienti (Chips) - Inclusione Logica AND
+                    if (selectedIngredients.size > 0) {
+                        const recipeIngsLower = ingredientsSearchText(recipe.ingredients);
+                        const allChipsMatch = Array.from(selectedIngredients).every(tag => {
+                            return recipeIngsLower.includes(tag.toLowerCase());
+                        });
+                        if (!allChipsMatch) return false;
+                    }
+
+                    // 3. Filtro Caratteristiche Dietetiche (Logica AND: la ricetta deve soddisfare tutte le diete selezionate)
+                    if (selectedDiets.size > 0) {
+                        // Suddividi i tag dietetici della ricetta
+                        const recipeTags = recipe.dietary_tags.split(',').map(tag => tag.trim().toLowerCase());
+                        const allDietsMatch = Array.from(selectedDiets).every(diet => {
+                            return recipeTags.includes(diet.toLowerCase());
+                        });
+                        if (!allDietsMatch) return false;
+                    }
+
+                    // 4. Filtro Difficoltà massima
+                    if (selectedDifficulty !== 'all') {
+                        if (normalizeDifficulty(recipe.difficulty) > parseInt(selectedDifficulty)) {
+                            return false;
+                        }
+                    }
+
+                    // 5. Filtro Tempo Prep Massimo
+                    if (maxTime < 120) {
+                        if (recipe.prep_time > maxTime) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                });
+
+                renderRecipes(filtered);
+            }
+
+            // Funzione di rendering card
+            function renderRecipes(recipesList) {
+                recipeGrid.innerHTML = "";
+
+                if (recipesList.length === 0) {
+                    recipeGrid.innerHTML = `
+                        <div class="no-results-container">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M8 15h8"></path>
+                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                            </svg>
+                            <h3>Nessuna ricetta trovata</h3>
+                            <p>Non ci sono piatti corrispondenti ai tuoi criteri. Prova a rimuovere qualche filtro!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                recipesList.forEach((recipe, idx) => {
+                    const card = document.createElement("div");
+                    card.className = "recipe-card";
+                    // Applica un'animazione a cascata (staggered delay) per un effetto premium
+                    card.style.opacity = "0";
+                    card.style.animation = `fadeIn 0.4s ease forwards ${idx * 0.05}s`;
+
+                    const stars = formatDifficultyStars(recipe.difficulty);
+                    const isSaved = savedIds.has(recipe.id);
+                    const isAdmin = currentUser && currentUser.username === 'admin';
+
+                    const adminActions = isAdmin ? `
+                        <div class="card-manage-actions">
+                            <button class="card-manage-btn delete-btn" onclick="deleteRecipe(${recipe.id}, this); event.stopPropagation();" title="Elimina (Admin)">
+                                <svg width="16" height="16" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    ` : '';
+
+                    // Formattazione dei tag dietetici come badge colorati
+                    let dietBadgesHtml = "";
+                    if (recipe.dietary_tags) {
+                        const tags = recipe.dietary_tags.split(",").map(t => t.trim());
+                        tags.forEach(tag => {
+                            if (tag) {
+                                const tagClass = tag.toLowerCase().replace(/\s+/g, '-');
+                                dietBadgesHtml += `<span class="recipe-dietary-badge ${tagClass}">${tag}</span>`;
+                            }
+                        });
+                    }
+
+                    // Icone o label per Categoria e Porzioni
+                    const categoryText = recipe.category ? `🍽 ${recipe.category}` : "🍽 Primo";
+                    const portionsText = recipe.portions ? `👥 ${recipe.portions}` : "👥 4 persone";
+
+                    card.innerHTML = `
+                        ${adminActions}
+                        <button class="save-btn ${isSaved ? 'saved' : ''}" onclick="toggleSaveRecipe(${recipe.id}, this); event.stopPropagation();">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                        </button>
+                        <img src="${recipe.image}" alt="${recipe.title}" onerror="this.src='img/pasta.png'">
+                        <div class="recipe-info">
+                            <h3>${recipe.title}</h3>
+                            
+                            <div class="recipe-card-meta">
+                                <span>${categoryText}</span>
+                                <span>${portionsText}</span>
+                            </div>
+
+                            <p style="font-size: 0.9rem; color: #666; margin-bottom: 5px;">
+                                ⏱ ${recipe.prep_time} min | <span style="color: var(--yellow); font-weight: bold; letter-spacing: 2px;">${stars}</span>
+                            </p>
+
+                            <div class="recipe-dietary-badges">
+                                ${dietBadgesHtml}
+                            </div>
+
+                            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 10px;">
+                                <span style="font-size: 0.85rem; color: var(--green); font-weight: bold;">
+                                    Leggi ricetta &rarr;
+                                </span>
+                            </div>
+                        </div>
+                    `;
+
+                    // Gestione click sulla card per visualizzare la ricetta completa
+                    card.addEventListener("click", (e) => {
+                        if (!isUserLoggedIn) {
+                            alert("Accedi per visualizzare la ricetta completa!");
+                            window.location.href = "account.html";
+                            return;
+                        }
+                        openRecipeModal(recipe.id);
+                    });
+
+                    recipeGrid.appendChild(card);
+                });
+            }
+
+            // Elementi DOM Modale Dettagli
+            const modalOverlay = document.getElementById("recipe-modal-overlay");
+            if (modalOverlay && modalOverlay.parentElement !== document.body) {
+                document.body.appendChild(modalOverlay);
+            }
+            const modalCloseBtn = document.getElementById("recipe-modal-close-btn");
+            const modalImg = document.getElementById("recipe-modal-img");
+            const modalTitle = document.getElementById("recipe-modal-title");
+            const modalDescription = document.getElementById("recipe-modal-description");
+            const modalInfoBar = document.getElementById("recipe-modal-info-bar");
+            const modalIngredients = document.getElementById("recipe-modal-ingredients");
+            const modalSteps = document.getElementById("recipe-modal-steps");
+            const modalNotesBox = document.getElementById("recipe-modal-notes-box");
+            const modalNotes = document.getElementById("recipe-modal-notes");
+            // Chiusura Modale
+            function closeRecipeModal() {
+                modalOverlay.classList.remove("open");
+                document.body.style.overflow = "";
+            }
+
+            modalCloseBtn.addEventListener("click", closeRecipeModal);
+
+            modalOverlay.addEventListener("click", (e) => {
+                if (e.target === modalOverlay) closeRecipeModal();
+            });
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && modalOverlay.classList.contains("open")) {
+                    closeRecipeModal();
+                }
+            });
+
+            // Apertura e popolamento del Modale
+            function openRecipeModal(recipeId) {
+                logInteraction("click", "", recipeId);
+                fetch(`http://127.0.0.1:8000/api/recipes/${recipeId}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error("Errore caricamento dettagli ricetta");
+                        return response.json();
+                    })
+                    .then(recipe => {
+                        modalImg.src = recipe.image || 'img/pasta.png';
+                        modalImg.onerror = () => { modalImg.src = 'img/pasta.png'; };
+                        modalTitle.innerText = recipe.title;
+
+                        if (recipe.description && recipe.description.trim()) {
+                            modalDescription.innerText = recipe.description;
+                            modalDescription.classList.remove("hidden");
+                        } else {
+                            modalDescription.classList.add("hidden");
+                        }
+
+                        const stars = formatDifficultyStars(recipe.difficulty);
+                        const categoryText = recipe.category ? `🍽 ${recipe.category}` : "🍽 Primo";
+                        const portionsText = recipe.portions ? `👥 ${recipe.portions}` : "👥 4 persone";
+                        const cookMethodText = recipe.cooking_method ? `🍳 ${recipe.cooking_method}` : "";
+                        const equipmentText = recipe.equipment ? `🔧 ${recipe.equipment}` : "";
+                        const timeDetail = recipe.prep_time_min != null
+                            ? `⏱ ${recipe.prep_time_min} min prep${recipe.cook_time_min ? ` + ${recipe.cook_time_min} min cottura` : ""}`
+                            : `⏱ ${recipe.prep_time} min`;
+
+                        modalInfoBar.innerHTML = `
+                            <span class="recipe-modal-info-tag">${categoryText}</span>
+                            <span class="recipe-modal-info-tag">${portionsText}</span>
+                            <span class="recipe-modal-info-tag">${timeDetail}</span>
+                            <span class="recipe-modal-info-tag">Difficoltà: ${stars}</span>
+                            ${cookMethodText ? `<span class="recipe-modal-info-tag">${cookMethodText}</span>` : ""}
+                            ${equipmentText ? `<span class="recipe-modal-info-tag">${equipmentText}</span>` : ""}
+                        `;
+
+                        if (recipe.dietary_tags) {
+                            recipe.dietary_tags.split(',').forEach(tag => {
+                                const trimTag = tag.trim();
+                                if (trimTag) {
+                                    modalInfoBar.innerHTML += `<span class="recipe-modal-info-tag diet-tag">${trimTag}</span>`;
+                                }
+                            });
+                        }
+
+                        // Ingredienti interattivi (checkbox)
+                        modalIngredients.innerHTML = "";
+                        const ingredientLines = parseIngredientsForDisplay(recipe.ingredients);
+                        if (ingredientLines.length > 0) {
+                            ingredientLines.forEach(trimIng => {
+                                if (trimIng) {
+                                    const label = document.createElement("label");
+                                    label.className = "modal-ingredient-item";
+                                    label.innerHTML = `
+                                        <input type="checkbox" class="modal-ingredient-checkbox">
+                                        <span class="modal-ingredient-text">${trimIng}</span>
+                                    `;
+                                    modalIngredients.appendChild(label);
+                                }
+                            });
+                        } else {
+                            modalIngredients.innerHTML = "<p style='color:#777; font-style:italic;'>Nessun ingrediente specificato.</p>";
+                        }
+
+                        // Procedimento passo-passo con foto
+                        modalSteps.innerHTML = "";
+                        let stepImagesMap = {};
+                        if (recipe.step_images) {
+                            try {
+                                stepImagesMap = JSON.parse(recipe.step_images);
+                            } catch (e) {
+                                console.warn("Immagini passaggi non valide:", e);
+                            }
+                        }
+                        if (recipe.steps) {
+                            const stepsArray = recipe.steps.includes("|||") 
+                                ? recipe.steps.split("|||") 
+                                : recipe.steps.split("\n");
+                            
+                            let stepCount = 1;
+                            stepsArray.forEach((step, index) => {
+                                const trimStep = step.trim();
+                                if (trimStep) {
+                                    const cleanedStep = trimStep.replace(/^\d+[\.\s\-–—]*/, "");
+                                    const stepImg = stepImagesMap[index] || stepImagesMap[String(index)] || "";
+                                    const stepDiv = document.createElement("div");
+                                    stepDiv.className = "modal-step-item";
+                                    stepDiv.innerHTML = `
+                                        <div class="modal-step-number">${stepCount}</div>
+                                        <div class="modal-step-body">
+                                            <div class="modal-step-content">${cleanedStep}</div>
+                                            ${stepImg ? `<img class="modal-step-image" src="${stepImg}" alt="Foto passaggio ${stepCount}">` : ""}
+                                        </div>
+                                    `;
+                                    modalSteps.appendChild(stepDiv);
+                                    stepCount++;
+                                }
+                            });
+                        } else {
+                            modalSteps.innerHTML = "<p style='color:#777; font-style:italic;'>Nessun procedimento specificato.</p>";
+                        }
+
+                        // Note dello Chef
+                        if (recipe.notes && recipe.notes.trim()) {
+                            modalNotes.innerText = recipe.notes;
+                            modalNotesBox.classList.remove("hidden");
+                        } else {
+                            modalNotesBox.classList.add("hidden");
+                        }
+
+                        modalOverlay.classList.add("open");
+                        document.body.style.overflow = "hidden";
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert("Impossibile caricare i dettagli completi della ricetta.");
+                    });
+            }
+
+            // Funzione globale per salvare/rimuovere ricette
+            window.toggleSaveRecipe = (recipeId, btn) => {
+                if (!isUserLoggedIn) {
+                    alert("Devi accedere per salvare le ricette nei tuoi preferiti!");
+                    window.location.href = "account.html";
+                    return;
+                }
+
+                fetch(`http://127.0.0.1:8000/api/user/${currentUserId}/toggle_save/${recipeId}`, {
+                    method: "POST"
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        if (data.saved) {
+                            btn.classList.add("saved");
+                        } else {
+                            btn.classList.remove("saved");
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.error("Errore toggle save:", err);
+                    alert("Impossibile salvare la ricetta al momento.");
+                });
+            };
+
+            // Funzione per eliminare una ricetta (Admin)
+            window.deleteRecipe = (recipeId, btn) => {
+                if (!confirm("Sei sicuro di voler eliminare questa ricetta?")) return;
+
+                const card = btn.closest('.recipe-card');
+                if (card) {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.85)';
+                    card.style.transition = 'all 0.3s ease';
+                }
+
+                fetch(`http://127.0.0.1:8000/api/recipes/${recipeId}`, {
+                    method: "DELETE"
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                        if (card) { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }
+                    } else {
+                        setTimeout(() => {
+                            if (card) card.remove();
+                        }, 300);
+                    }
+                })
+                .catch(err => {
+                    alert("Impossibile eliminare la ricetta al momento.");
+                    if (card) { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }
+                });
+            };
+
+            // Funzione per reindirizzare al modulo di creazione ricetta
+            window.navigateToAddRecipe = (event) => {
+                event.preventDefault();
+                if (!isUserLoggedIn) {
+                    alert("Devi accedere per poter aggiungere nuove ricette!");
+                    window.location.href = "account.html";
+                } else {
+                    window.location.href = "aggiungi_ricetta.html";
+                }
+            };
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>RiMangia - Aggiungi Ricetta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <script src="dropdown.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="Home.html"><img src="img/Gemini_Generated_Image_od9kg1od9kg1od9k-removebg-preview.png"
+                        alt="RiMangia Logo"></a>
+            </div>
+            <div class="nav-links">
+                <a href="Home.html">Home</a>
+                <a href="ricette.html">Ricette</a>
+                <a href="about.html">About us</a>
+                <a href="support.html">Support</a>
+            </div>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div class="add-recipe-icon">
+                    <a href="#" onclick="navigateToAddRecipe(event)">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--green)"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="account-icon">
+                    <a href="account.html">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--green)"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-container wizard-container">
+            <h2>Aggiungi una Ricetta</h2>
+
+            <!-- Stepper Progress Indicators -->
+            <div class="stepper" id="stepper">
+                <div class="stepper-progress" id="stepper-progress"></div>
+                <div class="step-indicator active" data-step="1">1<span class="step-label">Generali</span></div>
+                <div class="step-indicator" data-step="2">2<span class="step-label">Dettagli</span></div>
+                <div class="step-indicator" data-step="3">3<span class="step-label">Procedimento</span></div>
+                <div class="step-indicator" data-step="4">4<span class="step-label">Filtri</span></div>
+                <div class="step-indicator" data-step="5">5<span class="step-label">Extra</span></div>
+            </div>
+
+            <form id="add-recipe-wizard" class="recipe-form" onsubmit="handleSubmit(event)">
+
+                <!-- STEP 1: INFORMAZIONI GENERALI -->
+                <div class="wizard-step active" id="step-1">
+                    <h3 style="color: var(--green); margin-bottom: 5px;">Step 1: Informazioni Generali</h3>
+                    <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">Metti in vetrina il tuo capolavoro:
+                        scegli un nome memorabile, scatta una foto golosa e raccontaci la storia del tuo piatto!</p>
+
+                    <div class="form-group">
+                        <label for="recipe-title">Titolo Ricetta *</label>
+                        <input type="text" id="recipe-title" placeholder="Es. Pasta alla carbonara">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Foto Principale *</label>
+                        <div class="upload-zone" id="upload-zone">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                <circle cx="8.5" cy="8.5" r="1.5" />
+                                <polyline points="21 15 16 10 5 21" />
+                            </svg>
+                            <span>Trascina qui l'immagine o clicca per caricarla</span>
+                        </div>
+                        <input type="file" id="main-image-file" style="display: none;" accept="image/*" required>
+
+                        <div class="upload-preview-container" id="main-image-preview-container">
+                            <img id="main-image-preview" src="#" class="upload-preview" alt="Anteprima">
+                            <button type="button" class="upload-remove-btn"
+                                onclick="removeMainImage(event)">&times;</button>
+                        </div>
+
+                        <!-- Fallback / alternativo URL input -->
+                        <div style="margin-top: 15px;">
+                            <label for="recipe-image-url" style="font-size: 0.85rem; color: #777;">Oppure inserisci URL
+                                Immagine</label>
+                            <input type="text" id="recipe-image-url" placeholder="img/pasta.png" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipe-desc">Breve Descrizione</label>
+                        <textarea id="recipe-desc"
+                            placeholder="Racconta la storia di questo piatto o fai un'introduzione sfiziosa..."
+                            rows="4"></textarea>
+                    </div>
+                </div>
+
+                <!-- STEP 2: DETTAGLI PRATICI & FILTRI -->
+                <div class="wizard-step" id="step-2">
+                    <h3 style="color: var(--green); margin-bottom: 5px;">Step 2: Dettagli</h3>
+                    <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">I dettagli che contano: definisci i
+                        tempi, imposta le porzioni e svela il livello di sfida per chi vorrà mettersi ai fornelli.</p>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="recipe-portions">Porzioni / Resa *</label>
+                            <input type="text" id="recipe-portions" placeholder="Es. 4 persone, 12 pezzi" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="recipe-difficulty">Difficoltà *</label>
+                            <select id="recipe-difficulty" required>
+                                <option value="Facile">Facile 🔥</option>
+                                <option value="Media">Media 🔥🔥</option>
+                                <option value="Difficile">Difficile 🔥🔥🔥</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="recipe-prep-time">Tempo di Preparazione (minuti) *</label>
+                            <input type="number" id="recipe-prep-time" min="1" value="1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="recipe-cook-time">Tempo di Cottura (minuti) *</label>
+                            <input type="number" id="recipe-cook-time" min="0" value="0" required>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="wizard-step" id="step-3">
+                    <h3 style="color: var(--green); margin-bottom: 5px;">Step 3: Procedimento</h3>
+                    <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">Qui avviene la magia! Aggiungi gli
+                        ingredienti con le rispettive quantità e scrivi i passaggi del procedimento.</p>
+
+                    <div class="form-group">
+                        <label>Ingredienti *</label>
+                        <div id="ingredients-list" class="dynamic-container">
+                            <!-- Righe degli ingredienti caricate dinamicamente -->
+                        </div>
+                        <button type="button" class="add-dynamic-btn" onclick="addIngredientRow()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3" style="vertical-align: middle;">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg> Aggiungi Ingrediente
+                        </button>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label>Procedimento (Step-by-step) *</label>
+                        <div id="steps-list" class="step-container">
+                            <!-- Passaggi caricati dinamicamente -->
+                        </div>
+                        <button type="button" class="add-dynamic-btn" onclick="addStepRow()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3" style="vertical-align: middle;">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg> Aggiungi Passaggio
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 4: CLASSIFICAZIONE E RICERCA -->
+                <div class="wizard-step" id="step-4">
+                    <h3 style="color: var(--green); margin-bottom: 5px;">Step 4: Classificazione e Ricerca</h3>
+                    <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">Aiuta gli utenti a trovare la tua
+                        ricetta categorizzandola e specificando tags dietetici o metodi di cottura.</p>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="recipe-category">Categoria / Portata *</label>
+                            <select id="recipe-category" required>
+                                <option value="Antipasto">Antipasto</option>
+                                <option value="Primo" selected>Primo</option>
+                                <option value="Secondo">Secondo</option>
+                                <option value="Dolce">Dolce</option>
+                                <option value="Lievitato">Lievitato</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="recipe-cooking-method">Metodo di Cottura *</label>
+                            <select id="recipe-cooking-method" required>
+                                <option value="Padella">Padella</option>
+                                <option value="Forno">Forno</option>
+                                <option value="Frittura">Frittura</option>
+                                <option value="Vapore">Vapore</option>
+                                <option value="Senza Cottura">Senza Cottura</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Caratteristiche Dietetiche (Tag)</label>
+                        <p class="field-hint">Seleziona uno o più tags dietetici se applicabili:</p>
+                        <div class="diet-tags-container">
+                            <input type="checkbox" id="diet-veg" class="diet-tag-checkbox" value="Vegetariano">
+                            <label for="diet-veg" class="diet-tag-label">Vegetariano</label>
+
+                            <input type="checkbox" id="diet-vegan" class="diet-tag-checkbox" value="Vegano">
+                            <label for="diet-vegan" class="diet-tag-label">Vegano</label>
+
+                            <input type="checkbox" id="diet-gluten" class="diet-tag-checkbox" value="Senza Glutine">
+                            <label for="diet-gluten" class="diet-tag-label">Senza Glutine</label>
+
+                            <input type="checkbox" id="diet-lactose" class="diet-tag-checkbox" value="Senza Lattosio">
+                            <label for="diet-lactose" class="diet-tag-label">Senza Lattosio</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5: EXTRA E FOTO DEI PASSAGGI -->
+                <div class="wizard-step" id="step-5">
+                    <h3 style="color: var(--green); margin-bottom: 5px;">Step 5: Extra e Consigli</h3>
+                    <p style="color: #666; font-size: 0.95rem; margin-bottom: 15px;">Dettagli conclusivi e caricamento
+                        opzionale di foto associate ai singoli step del procedimento.</p>
+
+                    <div class="form-group">
+                        <label for="recipe-notes">Note dell'Autore</label>
+                        <textarea id="recipe-notes"
+                            placeholder="Consigli di conservazione, varianti di ingredienti, abbinamenti vini..."
+                            rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipe-equipment">Strumentazione Specifica</label>
+                        <input type="text" id="recipe-equipment"
+                            placeholder="Es. Planetaria, Frullatore ad immersione, Sifone">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Foto dei singoli passaggi (Opzionale)</label>
+                        <p class="field-hint">Carica un'immagine esplicativa per descrivere visivamente ciascun
+                            passaggio:</p>
+                        <div id="step-photos-list" class="dynamic-container" style="margin-top: 10px;">
+                            <!-- Popolato dinamicamente in base agli step inseriti nello step 3 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WIZARD BUTTONS NAVIGATION -->
+                <div class="wizard-buttons">
+                    <button type="button" class="btn-prev hidden" id="btn-prev" onclick="prevStep()"
+                        aria-label="Indietro">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                    </button>
+                    <button type="button" class="btn-next" id="btn-next" onclick="nextStep()" aria-label="Avanti">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                <div id="message-container"></div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // Controllo autenticazione immediato
+        const userStr = localStorage.getItem("rimangia_user");
+        let currentUser = null;
+        let isUserLoggedIn = false;
+
+        if (userStr) {
+            try {
+                currentUser = JSON.parse(userStr);
+                if (currentUser && currentUser.user_id) {
+                    isUserLoggedIn = true;
+                }
+            } catch (e) {
+                console.error("Errore parsing utente:", e);
+            }
+        }
+
+        if (!isUserLoggedIn) {
+            alert("Devi accedere per poter aggiungere nuove ricette!");
+            window.location.href = "account.html";
+        }
+
+        // Modalità Modifica
+        const urlParams = new URLSearchParams(window.location.search);
+        const editRecipeId = urlParams.get('edit');
+        const isEditMode = editRecipeId !== null;
+
+        // Struttura dati per memorizzare i campi del Wizard
+        const recipeData = {
+            title: "",
+            mainImage: "",
+            description: "",
+            portions: "",
+            difficulty: "Media",
+            prepTime: 0,
+            cookTime: 0,
+            ingredients: [],
+            steps: [],
+            category: "Primo",
+            dietaryTags: [],
+            cookingMethod: "Padella",
+            authorNotes: "",
+            equipment: "",
+            stepImages: {} // Mappa: index_passaggio -> base64 string
+        };
+
+        let currentStep = 1;
+        const totalSteps = 5;
+
+        // Inizializza l'interfaccia all'avvio
+        document.addEventListener("DOMContentLoaded", () => {
+            // Aggiungi un ingrediente di default e un passaggio di default
+            addIngredientRow();
+            addStepRow();
+            setupMainImageUpload();
+            goToStep(1);
+
+            if (isEditMode) {
+                // Modifica i testi del layout per la modalità modifica
+                document.querySelector(".wizard-container h2").innerText = "Modifica la tua Ricetta";
+                document.title = "RiMangia - Modifica Ricetta";
+
+                // Rimuovi l'obbligatorietà nativa dell'immagine principale in modalità modifica
+                document.getElementById("main-image-file").removeAttribute("required");
+
+                // Caricamento dei dati esistenti
+                fetch(`http://127.0.0.1:8000/api/recipes/${editRecipeId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert("Ricetta non trovata!");
+                            window.location.href = "account.html";
+                            return;
+                        }
+
+                        // Controllo di sicurezza: l'utente loggato è l'autore della ricetta?
+                        if (data.author_id && data.author_id !== currentUser.user_id) {
+                            alert("Non hai i permessi per modificare questa ricetta!");
+                            window.location.href = "account.html";
+                            return;
+                        }
+
+                        // Step 1
+                        document.getElementById("recipe-title").value = data.title || "";
+                        document.getElementById("recipe-desc").value = data.description || "";
+                        if (data.image) {
+                            if (data.image.startsWith("data:image")) {
+                                recipeData.mainImage = data.image;
+                                const preview = document.getElementById('main-image-preview');
+                                const previewContainer = document.getElementById('main-image-preview-container');
+                                preview.src = data.image;
+                                previewContainer.style.display = 'block';
+                                document.getElementById('upload-zone').style.display = 'none';
+                                document.getElementById('recipe-image-url').value = data.image;
+                            } else {
+                                document.getElementById('recipe-image-url').value = data.image;
+                            }
+                        }
+
+                        // Step 2
+                        let diffString = "Media";
+                        const diffLevel = data.difficulty >= 5 ? 3 : Math.max(1, Math.min(3, data.difficulty));
+                        if (diffLevel === 1) diffString = "Facile";
+                        else if (diffLevel === 3) diffString = "Difficile";
+                        document.getElementById("recipe-difficulty").value = diffString;
+                        document.getElementById("recipe-prep-time").value = data.prep_time_min != null
+                            ? Math.max(1, data.prep_time_min)
+                            : Math.max(1, data.prep_time || 1);
+                        document.getElementById("recipe-cook-time").value = data.cook_time_min != null
+                            ? data.cook_time_min
+                            : 0;
+                        document.getElementById("recipe-portions").value = data.portions || "4 persone";
+
+                        // Step 3 - ingredienti
+                        const ingList = document.getElementById("ingredients-list");
+                        ingList.innerHTML = "";
+                        let ingredientsLoaded = [];
+                        if (data.ingredients) {
+                            const raw = data.ingredients.trim();
+                            if (raw.startsWith("[")) {
+                                try { ingredientsLoaded = JSON.parse(raw); } catch (e) { /* legacy */ }
+                            }
+                            if (!ingredientsLoaded.length && raw) {
+                                raw.split(",").forEach(name => {
+                                    const n = name.trim();
+                                    if (n) ingredientsLoaded.push({ qty: "", unit: "g", name: n });
+                                });
+                            }
+                        }
+                        if (ingredientsLoaded.length) {
+                            ingredientsLoaded.forEach(ing => {
+                                addIngredientRow(ing.qty || "", ing.unit || "g", ing.name || "");
+                            });
+                        } else {
+                            addIngredientRow();
+                        }
+
+                        // Step 3 - passaggi
+                        const stepsList = document.getElementById("steps-list");
+                        stepsList.innerHTML = "";
+                        const stepsLoaded = data.steps
+                            ? (data.steps.includes("|||") ? data.steps.split("|||") : data.steps.split("\n"))
+                            : [];
+                        const stepsTrimmed = stepsLoaded.map(s => s.trim()).filter(Boolean);
+                        if (stepsTrimmed.length) {
+                            stepsTrimmed.forEach(text => addStepRow(text));
+                        } else {
+                            addStepRow();
+                        }
+
+                        // Step 4
+                        if (data.category) {
+                            document.getElementById("recipe-category").value = data.category;
+                        }
+                        if (data.cooking_method) {
+                            document.getElementById("recipe-cooking-method").value = data.cooking_method;
+                        }
+                        document.querySelectorAll(".diet-tag-checkbox").forEach(cb => cb.checked = false);
+                        if (data.dietary_tags) {
+                            const tags = data.dietary_tags.split(",").map(t => t.trim());
+                            document.querySelectorAll(".diet-tag-checkbox").forEach(cb => {
+                                if (tags.includes(cb.value)) cb.checked = true;
+                            });
+                        }
+
+                        // Step 5
+                        if (data.notes) {
+                            document.getElementById("recipe-notes").value = data.notes;
+                        }
+                        if (data.equipment) {
+                            document.getElementById("recipe-equipment").value = data.equipment;
+                        }
+                        if (data.step_images) {
+                            try {
+                                recipeData.stepImages = JSON.parse(data.step_images);
+                            } catch (e) {
+                                console.warn("Impossibile caricare foto passaggi:", e);
+                            }
+                        }
+                        updateStepPhotosList();
+                    })
+                    .catch(err => {
+                        console.error("Errore recupero ricetta:", err);
+                        alert("Impossibile caricare i dettagli della ricetta da modificare.");
+                        window.location.href = "account.html";
+                    });
+            }
+        });
+
+        // Configura il sistema di Stepper
+        const stepIndicators = document.querySelectorAll(".step-indicator");
+        stepIndicators.forEach(indicator => {
+            indicator.addEventListener("click", () => {
+                const targetStep = parseInt(indicator.getAttribute("data-step"));
+
+                // Consenti la navigazione diretta solo verso step già completati o l'attuale
+                if (targetStep < currentStep) {
+                    currentStep = targetStep;
+                    goToStep(currentStep);
+                } else if (targetStep > currentStep) {
+                    // Cliccando in avanti, esegui la validazione step-by-step
+                    let tempStep = currentStep;
+                    while (tempStep < targetStep) {
+                        if (validateStep(tempStep)) {
+                            tempStep++;
+                        } else {
+                            break;
+                        }
+                    }
+                    currentStep = tempStep;
+                    goToStep(currentStep);
+                }
+            });
+        });
+
+        // Navigazione tra gli step
+        function goToStep(stepNum) {
+            if (stepNum < 1 || stepNum > totalSteps) return;
+
+            // Mostra/Nascondi pannelli del form
+            for (let i = 1; i <= totalSteps; i++) {
+                const el = document.getElementById(`step-${i}`);
+                if (i === stepNum) {
+                    el.classList.add("active");
+                } else {
+                    el.classList.remove("active");
+                }
+            }
+
+            // Aggiorna lo stato dello Stepper visivo
+            stepIndicators.forEach(indicator => {
+                const indicatorStep = parseInt(indicator.getAttribute("data-step"));
+                if (indicatorStep === stepNum) {
+                    indicator.className = "step-indicator active";
+                } else if (indicatorStep < stepNum) {
+                    indicator.className = "step-indicator completed";
+                } else {
+                    indicator.className = "step-indicator";
+                }
+            });
+
+            // Calcola larghezza barra di avanzamento dello Stepper
+            const progressPercent = ((stepNum - 1) / (totalSteps - 1)) * 100;
+            document.getElementById("stepper-progress").style.width = `${progressPercent}%`;
+
+            // Configura i pulsanti Indietro/Avanti/Salva
+            const btnPrev = document.getElementById("btn-prev");
+            const btnNext = document.getElementById("btn-next");
+
+            if (stepNum === 1) {
+                btnPrev.classList.add("hidden");
+            } else {
+                btnPrev.classList.remove("hidden");
+            }
+
+            if (stepNum === totalSteps) {
+                btnNext.innerHTML = isEditMode ? "Aggiorna Ricetta" : "Salva Ricetta";
+                btnNext.classList.add("btn-submit-wizard");
+
+                // Aggiorna la lista delle foto associate ai passaggi dinamici nel pannello 5
+                updateStepPhotosList();
+            } else {
+                btnNext.innerHTML = `
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                `;
+                btnNext.classList.remove("btn-submit-wizard");
+            }
+
+            // Scroll automatico in cima al form
+            document.querySelector(".form-container").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function nextStep() {
+            if (currentStep === totalSteps) {
+                // Invia il form (Salva Ricetta)
+                document.getElementById("add-recipe-wizard").requestSubmit();
+                return;
+            }
+
+            if (validateStep(currentStep)) {
+                currentStep++;
+                goToStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                goToStep(currentStep);
+            }
+        }
+
+        // Funzione di validazione per singolo step
+        function validateStep(stepNum) {
+            const messageContainer = document.getElementById("message-container");
+            messageContainer.className = "";
+            messageContainer.innerText = "";
+
+            if (stepNum === 1) {
+                const title = document.getElementById("recipe-title").value.trim();
+                if (!title) {
+                    showValidationWarning("Il Titolo della ricetta è obbligatorio!");
+                    return false;
+                }
+
+                // Verifica che sia presente l'immagine principale
+                const imageUrl = document.getElementById("recipe-image-url").value.trim();
+                if (!recipeData.mainImage && !imageUrl) {
+                    showValidationWarning("La foto principale è obbligatoria per proseguire! Carica un file o inserisci un URL.");
+                    return false;
+                }
+            }
+
+            if (stepNum === 2) {
+                const portions = document.getElementById("recipe-portions").value.trim();
+                const prepTime = document.getElementById("recipe-prep-time").value;
+                const cookTime = document.getElementById("recipe-cook-time").value;
+
+                if (!portions) {
+                    showValidationWarning("Le porzioni o la resa della ricetta sono obbligatorie!");
+                    return false;
+                }
+                if (!prepTime || parseInt(prepTime) < 1) {
+                    showValidationWarning("Inserisci un tempo di preparazione valido (> 0 min)!");
+                    return false;
+                }
+                if (!cookTime || parseInt(cookTime) < 0) {
+                    showValidationWarning("Inserisci un tempo di cottura valido (>= 0 min)!");
+                    return false;
+                }
+            }
+
+            if (stepNum === 3) {
+                if (isEditMode) return true; // Ingredienti e passaggi sono facoltativi in modifica
+
+                // Controlla che gli ingredienti non siano vuoti
+                const ingNames = document.querySelectorAll(".ing-name");
+                if (ingNames.length === 0) {
+                    showValidationWarning("Aggiungi almeno un ingrediente alla ricetta!");
+                    return false;
+                }
+                for (let input of ingNames) {
+                    if (!input.value.trim()) {
+                        showValidationWarning("Inserisci il nome per tutti gli ingredienti aggiunti!");
+                        input.focus();
+                        return false;
+                    }
+                }
+
+                // Controlla che i passaggi del procedimento non siano vuoti
+                const stepTexts = document.querySelectorAll(".step-textarea");
+                if (stepTexts.length === 0) {
+                    showValidationWarning("Aggiungi almeno un passaggio nel procedimento!");
+                    return false;
+                }
+                for (let textarea of stepTexts) {
+                    if (!textarea.value.trim()) {
+                        showValidationWarning("Completa il testo per tutti i passaggi aggiunti!");
+                        textarea.focus();
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        function showValidationWarning(msg) {
+            const container = document.getElementById("message-container");
+            container.className = "error-message";
+            container.innerText = msg;
+        }
+
+        // GESTIONE INGREDIENTI DINAMICI (Step 3)
+        function addIngredientRow(qty = "", unit = "g", name = "") {
+            const container = document.getElementById("ingredients-list");
+            const row = document.createElement("div");
+            row.className = "dynamic-row";
+
+            row.innerHTML = `
+                <input type="text" class="ing-name" placeholder="Nome ingrediente" style="flex: 2;" ${isEditMode ? '' : 'required'} value="${name}">
+                <input type="number" class="ing-qty" placeholder="Qtà" min="0" step="any" style="flex: 0.8;" value="${qty}">
+                <select class="ing-unit" style="flex: 1.2;">
+                    <option value="g" ${unit === 'g' ? 'selected' : ''}>g</option>
+                    <option value="ml" ${unit === 'ml' ? 'selected' : ''}>ml</option>
+                    <option value="cucchiai" ${unit === 'cucchiai' ? 'selected' : ''}>cucchiai</option>
+                    <option value="cucchiaini" ${unit === 'cucchiaini' ? 'selected' : ''}>cucchiaini</option>
+                    <option value="pizzico" ${unit === 'pizzico' ? 'selected' : ''}>pizzico</option>
+                    <option value="q.b." ${unit === 'q.b.' ? 'selected' : ''}>q.b.</option>
+                </select>
+                <button type="button" class="btn-remove" onclick="removeIngredientRow(this)">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        <line x1="10" y1="11" x2="10" y2="17"/>
+                        <line x1="14" y1="11" x2="14" y2="17"/>
+                    </svg>
+                </button>
+            `;
+            container.appendChild(row);
+        }
+
+        function removeIngredientRow(btn) {
+            const row = btn.closest(".dynamic-row");
+            row.style.opacity = '0';
+            row.style.transform = 'scale(0.9)';
+            row.style.transition = 'all 0.2s ease';
+            setTimeout(() => {
+                row.remove();
+                if (document.getElementById("ingredients-list").children.length === 0) {
+                    addIngredientRow();
+                }
+            }, 200);
+        }
+
+        // GESTIONE PROCEDIMENTO STEP-BY-STEP DINAMICI (Step 3)
+        function addStepRow(text = "") {
+            const container = document.getElementById("steps-list");
+            const index = container.children.length;
+            const stepRow = document.createElement("div");
+            stepRow.className = "step-row";
+
+            stepRow.innerHTML = `
+                <div class="step-row-header">
+                    <h4 class="step-label-title">Passo 1</h4>
+                    <button type="button" class="btn-remove" onclick="removeStepRow(this)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            <line x1="10" y1="11" x2="10" y2="17"/>
+                            <line x1="14" y1="11" x2="14" y2="17"/>
+                        </svg>
+                    </button>
+                </div>
+                <textarea class="step-textarea" placeholder="Spiega dettagliatamente cosa fare in questo passaggio..." rows="3" ${isEditMode ? '' : 'required'} oninput="updateStepPhotosList()">${text}</textarea>
+            `;
+            container.appendChild(stepRow);
+            reorderSteps();
+        }
+
+        function removeStepRow(btn) {
+            const row = btn.closest(".step-row");
+            row.style.opacity = '0';
+            row.style.transform = 'scale(0.9)';
+            row.style.transition = 'all 0.2s ease';
+            setTimeout(() => {
+                row.remove();
+                reorderSteps();
+                updateStepPhotosList();
+                if (document.getElementById("steps-list").children.length === 0) {
+                    addStepRow();
+                }
+            }, 200);
+        }
+
+        function reorderSteps() {
+            const titles = document.querySelectorAll(".step-label-title");
+            titles.forEach((title, index) => {
+                title.innerText = `Passo ${index + 1}`;
+            });
+        }
+
+        // CARICAMENTO IMMAGINE PRINCIPALE (Drag & Drop e File Picker)
+        function setupMainImageUpload() {
+            const dropZone = document.getElementById('upload-zone');
+            const fileInput = document.getElementById('main-image-file');
+
+            dropZone.addEventListener('click', () => fileInput.click());
+
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('dragover');
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('dragover');
+            });
+
+            dropZone.addEventListener('drop', async (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    await processMainImage(files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', async (e) => {
+                const files = e.target.files;
+                if (files.length > 0) {
+                    await processMainImage(files[0]);
+                }
+            });
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        async function processMainImage(file) {
+            try {
+                const base64 = await fileToBase64(file);
+                recipeData.mainImage = base64;
+
+                const preview = document.getElementById('main-image-preview');
+                const previewContainer = document.getElementById('main-image-preview-container');
+                preview.src = base64;
+                previewContainer.style.display = 'block';
+                document.getElementById('upload-zone').style.display = 'none';
+
+                // Mappa il valore base64 nel campo di testo URL
+                document.getElementById('recipe-image-url').value = base64;
+            } catch (err) {
+                console.error("Errore nel caricamento del file principale:", err);
+            }
+        }
+
+        function removeMainImage(event) {
+            event.stopPropagation();
+            recipeData.mainImage = "";
+            document.getElementById('main-image-preview-container').style.display = 'none';
+            document.getElementById('upload-zone').style.display = 'flex';
+            document.getElementById('recipe-image-url').value = "";
+            document.getElementById('main-image-file').value = "";
+        }
+
+        // AGGIORNAMENTO DINAMICO DELLE FOTO DEI PASSAGGI (Step 5)
+        function updateStepPhotosList() {
+            const list = document.getElementById("step-photos-list");
+            list.innerHTML = "";
+
+            const stepTextareas = document.querySelectorAll(".step-textarea");
+            if (stepTextareas.length === 0) {
+                list.innerHTML = `<p style="color: #888; font-style: italic;">Aggiungi dei passaggi nello Step 3 per potervi associare delle foto.</p>`;
+                return;
+            }
+
+            stepTextareas.forEach((textarea, index) => {
+                const stepNum = index + 1;
+                const container = document.createElement("div");
+                container.className = "step-image-upload";
+                container.style.marginBottom = "15px";
+
+                const currentImg = recipeData.stepImages[index] || "";
+                const previewDisplay = currentImg ? "block" : "none";
+                const snippet = textarea.value.trim() ? textarea.value.trim().substring(0, 45) + "..." : `Passaggio senza testo`;
+
+                container.innerHTML = `
+                    <div style="flex-grow: 1; min-width: 0; padding-right: 10px;">
+                        <span style="font-weight: bold; font-size: 0.95rem; color: var(--black);">Foto Passo ${stepNum}</span>
+                        <p style="font-size: 0.82rem; color: #666; margin: 2px 0 0; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                            ${snippet}
+                        </p>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+                        <div class="step-img-preview-container" id="step-img-preview-container-${index}" style="display: ${previewDisplay}">
+                            <img id="step-img-preview-${index}" src="${currentImg}" class="step-img-preview">
+                            <button type="button" class="step-img-remove-btn" onclick="removeStepImage(${index})">&times;</button>
+                        </div>
+                        <label for="step-file-input-${index}" style="margin:0;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                            </svg> Sfoglia
+                        </label>
+                        <input type="file" id="step-file-input-${index}" style="display: none;" accept="image/*" onchange="handleStepImageUpload(event, ${index})">
+                    </div>
+                `;
+                list.appendChild(container);
+            });
+        }
+
+        async function handleStepImageUpload(event, index) {
+            const file = event.target.files[0];
+            if (!file) return;
+            try {
+                const base64 = await fileToBase64(file);
+                recipeData.stepImages[index] = base64;
+
+                const previewImg = document.getElementById(`step-img-preview-${index}`);
+                const previewContainer = document.getElementById(`step-img-preview-container-${index}`);
+                if (previewImg && previewContainer) {
+                    previewImg.src = base64;
+                    previewContainer.style.display = "block";
+                }
+            } catch (err) {
+                console.error("Errore conversione foto step:", err);
+            }
+        }
+
+        function removeStepImage(index) {
+            delete recipeData.stepImages[index];
+            const previewContainer = document.getElementById(`step-img-preview-container-${index}`);
+            if (previewContainer) {
+                previewContainer.style.display = "none";
+            }
+            const fileInput = document.getElementById(`step-file-input-${index}`);
+            if (fileInput) {
+                fileInput.value = "";
+            }
+        }
+
+        // RACCOLTA FINALE DEI DATI ED INVIO AL SERVER
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            // Esegui validazione di sicurezza finale su tutti gli step
+            for (let i = 1; i <= totalSteps; i++) {
+                if (!validateStep(i)) {
+                    currentStep = i;
+                    goToStep(currentStep);
+                    return;
+                }
+            }
+
+            const messageContainer = document.getElementById("message-container");
+            messageContainer.className = "";
+            messageContainer.innerText = "Salvataggio ricetta in corso...";
+
+            // 1. Raccogli informazioni da Step 1
+            recipeData.title = document.getElementById("recipe-title").value.trim();
+            recipeData.description = document.getElementById("recipe-desc").value.trim();
+            // Utilizza l'immagine caricata in base64, o l'URL nel input alternativo, o un default
+            const fallbackUrl = document.getElementById("recipe-image-url").value.trim();
+            recipeData.mainImage = recipeData.mainImage || fallbackUrl || "img/pasta.png";
+
+            // 2. Raccogli informazioni da Step 2
+            recipeData.portions = document.getElementById("recipe-portions").value.trim();
+            recipeData.difficulty = document.getElementById("recipe-difficulty").value;
+            recipeData.prepTime = parseInt(document.getElementById("recipe-prep-time").value) || 0;
+            recipeData.cookTime = parseInt(document.getElementById("recipe-cook-time").value) || 0;
+
+            // 3. Raccogli informazioni da Step 3
+            recipeData.ingredients = [];
+            const ingRows = document.querySelectorAll("#ingredients-list .dynamic-row");
+            ingRows.forEach(row => {
+                const qty = row.querySelector(".ing-qty").value;
+                const unit = row.querySelector(".ing-unit").value;
+                const name = row.querySelector(".ing-name").value.trim();
+                if (name) {
+                    recipeData.ingredients.push({ qty, unit, name });
+                }
+            });
+
+            recipeData.steps = [];
+            const alignedStepImages = {};
+            const stepTextareas = document.querySelectorAll(".step-textarea");
+            let savedStepIndex = 0;
+            stepTextareas.forEach((textarea, index) => {
+                const stepText = textarea.value.trim();
+                if (stepText) {
+                    recipeData.steps.push(stepText);
+                    if (recipeData.stepImages[index]) {
+                        alignedStepImages[savedStepIndex] = recipeData.stepImages[index];
+                    }
+                    savedStepIndex++;
+                }
+            });
+            recipeData.stepImages = alignedStepImages;
+
+            // 4. Raccogli informazioni da Step 4
+            recipeData.category = document.getElementById("recipe-category").value;
+            recipeData.cookingMethod = document.getElementById("recipe-cooking-method").value;
+
+            recipeData.dietaryTags = [];
+            const checkedTags = document.querySelectorAll(".diet-tag-checkbox:checked");
+            checkedTags.forEach(cb => {
+                recipeData.dietaryTags.push(cb.value);
+            });
+
+            // 5. Raccogli informazioni da Step 5
+            recipeData.authorNotes = document.getElementById("recipe-notes").value.trim();
+            recipeData.equipment = document.getElementById("recipe-equipment").value.trim();
+
+            // Stampa in console la struttura dati completa del Wizard per il debug e utilizzi futuri
+            console.log("=== STRUTTURA DATI RICETTA WIZARD (JSON) ===");
+            console.log(JSON.stringify(recipeData, null, 2));
+
+            // Mappa la difficoltà letterale a intero 1-3 (stelle)
+            let difficultyInt = 2;
+            if (recipeData.difficulty === "Facile") difficultyInt = 1;
+            else if (recipeData.difficulty === "Difficile") difficultyInt = 3;
+
+            // Crea payload compatibile con il backend
+            const payload = {
+                title: recipeData.title,
+                image: recipeData.mainImage,
+                description: recipeData.description,
+                prep_time: recipeData.prepTime,
+                cook_time: recipeData.cookTime,
+                difficulty: difficultyInt,
+                author_id: currentUser ? currentUser.user_id : 0,
+                ingredients: JSON.stringify(recipeData.ingredients),
+                dietary_tags: recipeData.dietaryTags.join(', '),
+                category: recipeData.category,
+                portions: recipeData.portions,
+                steps: recipeData.steps.join('|||'),
+                notes: recipeData.authorNotes,
+                step_images: JSON.stringify(recipeData.stepImages),
+                cooking_method: recipeData.cookingMethod,
+                equipment: recipeData.equipment
+            };
+
+            // Invia tramite chiamata API esistente o aggiorna se in modalità modifica
+            const targetUrl = isEditMode 
+                ? `http://127.0.0.1:8000/api/recipes/${editRecipeId}`
+                : "http://127.0.0.1:8000/api/recipes/add";
+            const targetMethod = isEditMode ? "PUT" : "POST";
+
+            fetch(targetUrl, {
+                method: targetMethod,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        messageContainer.className = "success-message";
+                        messageContainer.innerText = isEditMode 
+                            ? "Ricetta modificata con successo! Reindirizzamento..."
+                            : "Ricetta aggiunta con successo! Reindirizzamento...";
+                        setTimeout(() => {
+                            window.location.href = "ricette.html";
+                        }, 1800);
+                    } else {
+                        messageContainer.className = "error-message";
+                        messageContainer.innerText = data.error || "Si è verificato un errore durante il salvataggio.";
+                    }
+                })
+                .catch(error => {
+                    console.error("Errore di invio:", error);
+                    messageContainer.className = "error-message";
+                    messageContainer.innerText = "Impossibile connettersi al server. Verifica che sia attivo.";
+                });
+        }
+
+        // Reindirizzamento icona "+"
+        window.navigateToAddRecipe = (event) => {
+            event.preventDefault();
+            window.location.reload();
+        };
+    </script>
+</body>
+
+</html>

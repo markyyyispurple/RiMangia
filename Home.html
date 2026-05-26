@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>RiMangia - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <script src="dropdown.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="Home.html"><img src="img/Gemini_Generated_Image_od9kg1od9kg1od9k-removebg-preview.png"
+                        alt="RiMangia Logo"></a>
+            </div>
+            <div class="nav-links">
+                <a href="Home.html" style="color: var(--orange);">Home</a>
+                <a href="ricette.html">Ricette</a>
+                <a href="about.html">About us</a>
+                <a href="support.html">Support</a>
+            </div>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div class="add-recipe-icon">
+                    <a href="#" onclick="navigateToAddRecipe(event)">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--green)"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="account-icon">
+                    <a href="account.html">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--green)"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="big-logo">
+                <img src="img/wLogo.png" alt="RiMangia Big Logo">
+            </div>
+            <a href="ricette.html" class="cta-button">Vai alle ricette &rarr;</a>
+        </section>
+
+        <section class="consigliate">
+            <div class="section-header">
+                <img src="img/consigliate-removebg-preview.png" alt="Ricette Consigliate">
+            </div>
+
+            <div class="recipe-grid" id="recipe-grid">
+                <div class="recipe-card">
+                    <img src="img/pasta.png" alt="Caricamento">
+                    <div class="recipe-info">
+                        <h3>Caricamento ricette...</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modale dettaglio ricetta (fuori da main per corretta visualizzazione) -->
+    <div class="recipe-modal-overlay" id="recipe-modal-overlay">
+            <div class="recipe-modal-container">
+                <button class="recipe-modal-close-btn" id="recipe-modal-close-btn" aria-label="Chiudi">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+                <img class="recipe-modal-header-img" id="recipe-modal-img" src="" alt="">
+                <div class="recipe-modal-body">
+                    <h2 class="recipe-modal-title" id="recipe-modal-title">Titolo Ricetta</h2>
+                    <p class="recipe-modal-description hidden" id="recipe-modal-description"></p>
+                    <div class="recipe-modal-info-bar" id="recipe-modal-info-bar"></div>
+                    <div class="recipe-modal-grid">
+                        <div>
+                            <h3 class="recipe-modal-section-title">Ingredienti</h3>
+                            <div class="modal-ingredients-list" id="recipe-modal-ingredients"></div>
+                        </div>
+                        <div>
+                            <h3 class="recipe-modal-section-title">Preparazione</h3>
+                            <div class="modal-steps-list" id="recipe-modal-steps"></div>
+                            <div class="modal-notes-box hidden" id="recipe-modal-notes-box">
+                                <strong>Note dello Chef</strong>
+                                <p id="recipe-modal-notes"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="recipe-ui.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const recipeGrid = document.getElementById("recipe-grid");
+
+            const userStr = localStorage.getItem("rimangia_user");
+            let currentUser = null;
+            let currentUserId = null;
+            let isUserLoggedIn = false;
+
+            if (userStr) {
+                try {
+                    currentUser = JSON.parse(userStr);
+                    if (currentUser && currentUser.user_id) {
+                        currentUserId = currentUser.user_id;
+                        isUserLoggedIn = true;
+                    }
+                } catch (e) {
+                    console.error("Errore parsing utente:", e);
+                }
+            }
+
+            // Mostra avviso se non loggato
+            if (!isUserLoggedIn) {
+                const mainEl = document.querySelector(".consigliate");
+                const banner = document.createElement("p");
+                banner.style.cssText = "text-align: center; color: #888; font-size: 1.1rem; margin-bottom: 30px; width: 100%; max-width: 800px; line-height: 1.6;";
+                banner.innerHTML = 'Accedi o registrati nella sezione <a href="account.html" style="color: var(--green); font-weight: bold; text-decoration: none; border-bottom: 2px solid var(--green);">Account</a> per salvare le tue ricette preferite!';
+                mainEl.insertBefore(banner, recipeGrid);
+            }
+
+            // Carica prima i preferiti dell'utente per impostare lo stato iniziale dei cuori
+            const savedIds = new Set();
+            let savedPromise = Promise.resolve();
+
+            if (isUserLoggedIn) {
+                savedPromise = fetch(`http://127.0.0.1:8000/api/user/${currentUserId}/saved_recipes`)
+                    .then(response => response.ok ? response.json() : { recipes: [] })
+                    .then(data => {
+                        if (data.recipes) {
+                            data.recipes.forEach(r => savedIds.add(r.id));
+                        }
+                    })
+                    .catch(err => console.error("Errore caricamento ricette salvate:", err));
+            }
+
+            function logInteraction(tipo, valore = "", ricettaId = null) {
+                if (!isUserLoggedIn) return;
+                fetch(`${RecipeUI.API_BASE}/user/${currentUserId}/interactions`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        tipo_interazione: tipo,
+                        valore: valore,
+                        ricetta_id: ricettaId
+                    })
+                }).catch(err => console.error("Errore log interazione:", err));
+            }
+
+            if (typeof RecipeUI === "undefined") {
+                console.error("recipe-ui.js non caricato");
+                recipeGrid.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: #888;'>Errore caricamento interfaccia ricette.</p>";
+                return;
+            }
+
+            const { openRecipeModal } = RecipeUI.initRecipeModal({
+                isUserLoggedIn,
+                onLogClick: (recipeId) => logInteraction("click", "", recipeId),
+            });
+
+            const isAdmin = currentUser && currentUser.username === "admin";
+
+            savedPromise.then(() => {
+                const recipesUrl = isUserLoggedIn
+                    ? `http://127.0.0.1:8000/api/recipes/recommended/${currentUserId}`
+                    : "http://127.0.0.1:8000/api/recipes";
+
+                fetch(recipesUrl)
+                    .then(response => {
+                        if (!response.ok) throw new Error("Errore nel caricamento delle ricette");
+                        return response.json();
+                    })
+                    .then(data => {
+                        recipeGrid.innerHTML = "";
+                        const recipes = (data.recipes || []).slice(0, 6);
+
+                        if (recipes.length === 0) {
+                            recipeGrid.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: #888;'>Nessuna ricetta disponibile al momento.</p>";
+                            return;
+                        }
+
+                        recipes.forEach((recipe, idx) => {
+                            RecipeUI.appendRecipeCard(recipeGrid, recipe, {
+                                savedIds,
+                                isAdmin,
+                                openRecipeModal,
+                                animateIndex: idx,
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Errore di connessione al server:", error);
+                        recipeGrid.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: #888;'>Avvia il server Python per vedere le ricette in evidenza.</p>";
+                    });
+            });
+
+            // Funzione per salvare/rimuovere ricette
+            window.toggleSaveRecipe = (recipeId, btn) => {
+                if (!isUserLoggedIn) {
+                    alert("Devi accedere per salvare le ricette nei tuoi preferiti!");
+                    window.location.href = "account.html";
+                    return;
+                }
+
+                fetch(`http://127.0.0.1:8000/api/user/${currentUserId}/toggle_save/${recipeId}`, {
+                    method: "POST"
+                })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            if (data.saved) {
+                                btn.classList.add("saved");
+                            } else {
+                                btn.classList.remove("saved");
+                            }
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Errore toggle save:", err);
+                        alert("Impossibile salvare la ricetta al momento.");
+                    });
+            };
+
+            // Funzione per eliminare una ricetta (Admin)
+            window.deleteRecipe = (recipeId, btn) => {
+                if (!confirm("Sei sicuro di voler eliminare questa ricetta?")) return;
+
+                const card = btn.closest('.recipe-card');
+                if (card) {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.85)';
+                    card.style.transition = 'all 0.3s ease';
+                }
+
+                fetch(`http://127.0.0.1:8000/api/recipes/${recipeId}`, {
+                    method: "DELETE"
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                        if (card) { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }
+                    } else {
+                        setTimeout(() => {
+                            if (card) card.remove();
+                        }, 300);
+                    }
+                })
+                .catch(err => {
+                    alert("Impossibile eliminare la ricetta al momento.");
+                    if (card) { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }
+                });
+            };
+
+            // Funzione per reindirizzare al modulo di creazione ricetta
+            window.navigateToAddRecipe = (event) => {
+                event.preventDefault();
+                if (!isUserLoggedIn) {
+                    alert("Devi accedere per poter aggiungere nuove ricette!");
+                    window.location.href = "account.html";
+                } else {
+                    window.location.href = "aggiungi_ricetta.html";
+                }
+            };
+        });
+    </script>
+</body>
+
+</html>
